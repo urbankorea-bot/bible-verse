@@ -370,7 +370,7 @@
     </section>
 
     <footer class="footer" id="footerText">
-      본 앱은 개역개정 성경 본문 일부를 인용하여 개인 묵상용으로 제공합니다.
+      본 앱은 개역개정 성경 본문 일부를 인용하여 개인 묵상용으로 제공합니다. Developed by Jin Jo
     </footer>
   </main>
 
@@ -392,7 +392,7 @@
         chipMood: "감정",
         chipSituation: "상황",
         version: "개역개정",
-        footer: "본 앱은 개역개정 성경 본문 일부를 인용하여 개인 묵상용으로 제공합니다."
+        footer: "본 앱은 개역개정 성경 본문 일부를 인용하여 개인 묵상용으로 제공합니다. Developed by Jin Jo"
       },
       en: {
         pageTitle: "Bible Verse for You Today",
@@ -410,7 +410,7 @@
         chipMood: "Emotion",
         chipSituation: "Situation",
         version: "KRV-based",
-        footer: "This app provides selected Bible text for personal meditation."
+        footer: "This app provides selected Bible text for personal meditation. Developed by Jin Jo"
       }
     };
 
@@ -684,6 +684,175 @@
         }
       ]
     };
+
+    const supplementalVersePool = {
+      mood: [
+        {
+          reference: "시편 23:4",
+          verseKo: "내가 사망의 음침한 골짜기로 다닐지라도 해를 두려워하지 않을 것은 주께서 나와 함께 하심이라.",
+          descKo: "감정의 골짜기에서도 하나님이 함께하신다는 사실이 마음을 붙들어 줍니다.",
+          verseEn: "Even though I walk through the darkest valley, I will fear no evil, for you are with me.",
+          descEn: "Even in emotional valleys, God's presence remains your stability."
+        },
+        {
+          reference: "시편 46:1",
+          verseKo: "하나님은 우리의 피난처시요 힘이시니 환난 중에 만날 큰 도움이시라.",
+          descKo: "흔들릴 때 숨을 곳과 힘의 근원이 하나님께 있음을 확인하게 합니다.",
+          verseEn: "God is our refuge and strength, an ever-present help in trouble.",
+          descEn: "When emotions shake you, this points you back to God as your refuge."
+        },
+        {
+          reference: "시편 121:1-2",
+          verseKo: "내가 산을 향하여 눈을 들리라 나의 도움이 어디서 올까 나의 도움은 천지를 지으신 여호와에게서로다.",
+          descKo: "도움의 근원을 하나님께 둘 때 마음의 초점이 다시 세워집니다.",
+          verseEn: "I lift up my eyes to the mountains... My help comes from the Lord.",
+          descEn: "It re-centers your heart on the true source of help."
+        },
+        {
+          reference: "이사야 26:3",
+          verseKo: "주께서 심지가 견고한 자를 평강하고 평강하도록 지키시리니 이는 그가 주를 신뢰함이니이다.",
+          descKo: "마음이 분주할수록 주님을 신뢰하는 데서 평안이 자랍니다.",
+          verseEn: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.",
+          descEn: "Peace grows as your mind leans on trust in God."
+        },
+        {
+          reference: "마태복음 6:34",
+          verseKo: "그러므로 내일 일을 위하여 염려하지 말라 한 날의 괴로움은 그 날로 족하니라.",
+          descKo: "감정을 키우는 미래 염려 대신 오늘의 순종에 집중하게 합니다.",
+          verseEn: "Do not worry about tomorrow... each day has enough trouble of its own.",
+          descEn: "It brings your attention from tomorrow's fear back to today's faithfulness."
+        },
+        {
+          reference: "빌립보서 4:13",
+          verseKo: "내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라.",
+          descKo: "지금 감당하기 어려운 순간에도 주님 안에서 힘을 얻도록 도와줍니다.",
+          verseEn: "I can do all this through him who gives me strength.",
+          descEn: "In hard moments, your strength is received, not self-produced."
+        },
+        {
+          reference: "로마서 8:28",
+          verseKo: "하나님을 사랑하는 자 곧 그의 뜻대로 부르심을 입은 자들에게는 모든 것이 합력하여 선을 이루느니라.",
+          descKo: "현재 감정이 복잡해도 하나님은 선한 결론으로 이끄십니다.",
+          verseEn: "In all things God works for the good of those who love him.",
+          descEn: "Even when feelings are mixed, God is still weaving good."
+        },
+        {
+          reference: "잠언 3:5-6",
+          verseKo: "너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라.",
+          descKo: "내 해석보다 하나님의 인도하심을 신뢰하도록 방향을 잡아줍니다.",
+          verseEn: "Trust in the Lord with all your heart and lean not on your own understanding.",
+          descEn: "It redirects you from self-judgment to trust in God's guidance."
+        },
+        {
+          reference: "히브리서 13:8",
+          verseKo: "예수 그리스도는 어제나 오늘이나 영원토록 동일하시니라.",
+          descKo: "감정은 변해도 주님의 성품은 변하지 않는다는 확신을 줍니다.",
+          verseEn: "Jesus Christ is the same yesterday and today and forever.",
+          descEn: "Your emotions may shift, but Christ remains unchanging."
+        },
+        {
+          reference: "데살로니가전서 5:16-18",
+          verseKo: "항상 기뻐하라 쉬지 말고 기도하라 범사에 감사하라.",
+          descKo: "감정의 흐름 속에서도 기쁨, 기도, 감사의 리듬을 회복하게 합니다.",
+          verseEn: "Rejoice always, pray continually, give thanks in all circumstances.",
+          descEn: "This restores a healthy rhythm of joy, prayer, and gratitude."
+        }
+      ],
+      situation: [
+        {
+          reference: "잠언 15:1",
+          verseKo: "유순한 대답은 분노를 쉬게 하여도 과격한 말은 노를 격동하느니라.",
+          descKo: "일상 갈등에서는 말의 온도가 관계의 방향을 크게 바꿉니다.",
+          verseEn: "A gentle answer turns away wrath, but a harsh word stirs up anger.",
+          descEn: "In daily conflict, the tone of your words shapes the outcome."
+        },
+        {
+          reference: "에베소서 4:26",
+          verseKo: "분을 내어도 죄를 짓지 말며 해가 지도록 분을 품지 말고.",
+          descKo: "갈등을 오래 끌기보다 건강하게 풀어내도록 도와주는 기준입니다.",
+          verseEn: "In your anger do not sin... do not let the sun go down while you are still angry.",
+          descEn: "It gives a boundary for resolving conflict before it hardens."
+        },
+        {
+          reference: "골로새서 3:15",
+          verseKo: "그리스도의 평강이 너희 마음을 주장하게 하라.",
+          descKo: "상황이 복잡해도 중심을 평강에 두도록 이끌어 줍니다.",
+          verseEn: "Let the peace of Christ rule in your hearts.",
+          descEn: "Even complicated situations become clearer when peace leads your heart."
+        },
+        {
+          reference: "시편 127:1",
+          verseKo: "여호와께서 집을 세우지 아니하시면 세우는 자의 수고가 헛되며.",
+          descKo: "가정과 관계의 기초를 하나님께 두어야 함을 상기시켜 줍니다.",
+          verseEn: "Unless the Lord builds the house, the builders labor in vain.",
+          descEn: "It reminds you to build family and relationships on God first."
+        },
+        {
+          reference: "마태복음 7:12",
+          verseKo: "그러므로 무엇이든지 남에게 대접을 받고자 하는 대로 너희도 남을 대접하라.",
+          descKo: "관계가 어렵게 느껴질 때 행동 기준을 단순하고 분명하게 해줍니다.",
+          verseEn: "Do to others what you would have them do to you.",
+          descEn: "When relationships are tense, this gives a clear practical standard."
+        },
+        {
+          reference: "빌립보서 2:4",
+          verseKo: "각각 자기 일을 돌볼뿐더러 또한 각각 다른 사람들의 일을 돌보아 나의 기쁨을 충만하게 하라.",
+          descKo: "내 입장만이 아니라 상대의 필요를 함께 보도록 균형을 잡아줍니다.",
+          verseEn: "Not looking to your own interests but each of you to the interests of the others.",
+          descEn: "It restores balance by considering the needs of others too."
+        },
+        {
+          reference: "로마서 12:10",
+          verseKo: "형제를 사랑하여 서로 우애하고 존경하기를 서로 먼저 하며.",
+          descKo: "존중과 배려를 먼저 선택할 때 관계의 분위기가 달라집니다.",
+          verseEn: "Be devoted to one another in love. Honor one another above yourselves.",
+          descEn: "Choosing honor first can reset the atmosphere of a relationship."
+        },
+        {
+          reference: "히브리서 10:24",
+          verseKo: "서로 돌아보아 사랑과 선행을 격려하며.",
+          descKo: "문제를 해결하는 것 이상으로 서로를 세우는 방향을 보여줍니다.",
+          verseEn: "Let us consider how we may spur one another on toward love and good deeds.",
+          descEn: "Beyond solving problems, this points to building each other up."
+        },
+        {
+          reference: "이사야 40:29",
+          verseKo: "피곤한 자에게는 능력을 주시며 무능한 자에게는 힘을 더하시나니.",
+          descKo: "생활의 무게로 지칠 때 하나님이 새 힘을 더하신다는 약속입니다.",
+          verseEn: "He gives strength to the weary and increases the power of the weak.",
+          descEn: "When daily burdens drain you, God promises renewed strength."
+        },
+        {
+          reference: "예레미야 17:7",
+          verseKo: "무릇 여호와를 의지하며 여호와를 의뢰하는 그 사람은 복을 받을 것이라.",
+          descKo: "복잡한 현실에서도 신뢰의 방향을 하나님께 두게 합니다.",
+          verseEn: "Blessed is the one who trusts in the Lord, whose confidence is in him.",
+          descEn: "In uncertainty, it anchors your confidence in God."
+        }
+      ]
+    };
+
+    function ensureMinimumVerses(library, minCount) {
+      Object.keys(library).forEach((sectionKey) => {
+        const options = library[sectionKey];
+        const pool = supplementalVersePool[sectionKey] || [];
+        options.forEach((option) => {
+          const existingRefs = new Set(option.verses.map((verse) => verse.reference));
+          let poolIndex = option.id.length % (pool.length || 1);
+          while (option.verses.length < minCount && pool.length > 0) {
+            const candidate = pool[poolIndex % pool.length];
+            poolIndex += 1;
+            if (existingRefs.has(candidate.reference)) {
+              continue;
+            }
+            option.verses.push({ ...candidate });
+            existingRefs.add(candidate.reference);
+          }
+        });
+      });
+    }
+
+    ensureMinimumVerses(verseLibrary, 10);
 
     const sectionSwitch = document.getElementById("sectionSwitch");
     const optionGrid = document.getElementById("optionGrid");
