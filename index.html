@@ -33,7 +33,7 @@
     }
 
     .app {
-      width: min(820px, 100%);
+      width: min(860px, 100%);
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -42,9 +42,17 @@
     }
 
     .header {
-      padding: 28px 24px 18px;
+      padding: 24px 24px 18px;
       background: linear-gradient(120deg, #fef3c7 0%, #e0f2fe 100%);
       border-bottom: 1px solid var(--border);
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
 
     h1 {
@@ -58,6 +66,29 @@
       color: var(--sub);
       font-size: 0.98rem;
       line-height: 1.5;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid #93c5fd;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #ffffffd8;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: #1e3a8a;
+    }
+
+    .lang-btn.active {
+      background: #1d4ed8;
+      color: #fff;
+      font-weight: 700;
     }
 
     .hero-image {
@@ -78,19 +109,43 @@
       gap: 18px;
     }
 
+    .section-switch {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .section-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: #111827;
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .section-btn.active {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: #1e3a8a;
+      font-weight: 700;
+    }
+
     .label {
       font-weight: 700;
       margin: 0 0 8px;
       font-size: 0.98rem;
     }
 
-    .mood-grid {
+    .option-grid {
       display: grid;
       gap: 10px;
-      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
 
-    .mood-btn {
+    .option-btn {
       border: 1px solid var(--border);
       background: #fff;
       color: var(--text);
@@ -101,12 +156,12 @@
       transition: all 0.18s ease;
     }
 
-    .mood-btn:hover {
+    .option-btn:hover {
       border-color: #93c5fd;
       transform: translateY(-1px);
     }
 
-    .mood-btn.active {
+    .option-btn.active {
       background: var(--primary-soft);
       border-color: var(--primary);
       color: #1e3a8a;
@@ -140,7 +195,8 @@
       border: 1px solid var(--border);
     }
 
-    .primary-btn:disabled {
+    .primary-btn:disabled,
+    .ghost-btn:disabled {
       opacity: 0.45;
       cursor: not-allowed;
     }
@@ -152,7 +208,7 @@
       background: #fcfcfd;
       display: grid;
       gap: 12px;
-      min-height: 200px;
+      min-height: 220px;
       align-content: start;
     }
 
@@ -180,7 +236,7 @@
 
     .verse-visual {
       width: 100%;
-      height: 160px;
+      height: 170px;
       object-fit: cover;
       border-radius: 12px;
       border: 1px solid #cbd5e1;
@@ -266,11 +322,15 @@
       }
 
       .header {
-        padding: 22px 18px 14px;
+        padding: 20px 18px 14px;
       }
 
       .footer {
         padding: 0 18px 18px;
+      }
+
+      .hero-image {
+        height: 120px;
       }
     }
   </style>
@@ -278,15 +338,25 @@
 <body>
   <main class="app">
     <header class="header">
-      <h1>오늘 당신을 위한 성경말씀</h1>
-      <p class="subtitle">지금 감정에 맞는 개역개정 성경구절과 짧은 묵상 포인트를 추천해드립니다.</p>
+      <div class="top-row">
+        <div>
+          <h1 id="titleText">오늘 당신을 위한 성경말씀</h1>
+          <p class="subtitle" id="subtitleText">지금 감정과 상황에 맞는 개역개정 성경구절과 짧은 묵상 포인트를 추천해드립니다.</p>
+        </div>
+        <div class="lang-switch" aria-label="Language switch">
+          <button class="lang-btn active" id="langKoBtn" type="button">한국어</button>
+          <button class="lang-btn" id="langEnBtn" type="button">English</button>
+        </div>
+      </div>
       <div class="hero-image" aria-label="성경 관련 이미지"></div>
     </header>
 
     <section class="content">
+      <div class="section-switch" id="sectionSwitch"></div>
+
       <div>
-        <p class="label">오늘 내 마음은 어떤가요?</p>
-        <div class="mood-grid" id="moodGrid"></div>
+        <p class="label" id="selectLabel">오늘 내 마음은 어떤가요?</p>
+        <div class="option-grid" id="optionGrid"></div>
       </div>
 
       <div class="actions">
@@ -295,263 +365,595 @@
       </div>
 
       <section class="result" id="resultBox">
-        <p class="empty">감정을 먼저 선택하신 뒤 <strong>말씀 추천받기</strong> 버튼을 눌러주세요.</p>
+        <p class="empty" id="emptyText">감정 또는 상황을 먼저 선택하신 뒤 <strong>말씀 추천받기</strong> 버튼을 눌러주세요.</p>
       </section>
     </section>
 
-    <footer class="footer">
+    <footer class="footer" id="footerText">
       본 앱은 개역개정 성경 본문 일부를 인용하여 개인 묵상용으로 제공합니다.
     </footer>
   </main>
 
   <script>
-    const verseByMood = {
-      "기쁨": [
+    const uiText = {
+      ko: {
+        pageTitle: "오늘 당신을 위한 성경말씀",
+        subtitle: "지금 감정과 상황에 맞는 개역개정 성경구절과 짧은 묵상 포인트를 추천해드립니다.",
+        sectionMood: "감정",
+        sectionSituation: "일상 상황",
+        labelMood: "오늘 내 마음은 어떤가요?",
+        labelSituation: "요즘 어떤 상황을 지나고 있나요?",
+        recommend: "말씀 추천받기",
+        another: "다른 구절 보기",
+        loading: "말씀을 찾고 있습니다...",
+        empty: "감정 또는 상황을 먼저 선택하신 뒤 <strong>말씀 추천받기</strong> 버튼을 눌러주세요.",
+        ready: "선택한 항목에 맞춰 말씀을 추천할 준비가 되었어요. <strong>말씀 추천받기</strong>를 눌러주세요.",
+        notReady: "해당 항목에 대한 말씀이 아직 준비되지 않았습니다.",
+        chipMood: "감정",
+        chipSituation: "상황",
+        version: "개역개정",
+        footer: "본 앱은 개역개정 성경 본문 일부를 인용하여 개인 묵상용으로 제공합니다."
+      },
+      en: {
+        pageTitle: "Bible Verse for You Today",
+        subtitle: "Get Bible verses (Korean Revised Version based) and short reflections for your emotion or life situation.",
+        sectionMood: "Emotion",
+        sectionSituation: "Life Situation",
+        labelMood: "How are you feeling today?",
+        labelSituation: "Which situation are you facing lately?",
+        recommend: "Get Verse",
+        another: "Show Another",
+        loading: "Preparing your verse...",
+        empty: "Choose an emotion or situation, then click <strong>Get Verse</strong>.",
+        ready: "Selection saved. Click <strong>Get Verse</strong> to receive a verse.",
+        notReady: "No verse is available for this selection yet.",
+        chipMood: "Emotion",
+        chipSituation: "Situation",
+        version: "KRV-based",
+        footer: "This app provides selected Bible text for personal meditation."
+      }
+    };
+
+    const verseLibrary = {
+      mood: [
         {
-          reference: "시편 118:24",
-          verse: "이 날은 여호와께서 정하신 것이라 이 날에 우리가 즐거워하고 기뻐하리로다.",
-          description: "기쁨의 이유가 상황이 아니라 하나님께 있다는 사실을 붙들게 해 줍니다. 오늘의 감사 제목을 한 가지 적어보세요."
+          id: "joy",
+          ko: "기쁨",
+          en: "Joy",
+          image: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "시편 118:24",
+              verseKo: "이 날은 여호와께서 정하신 것이라 이 날에 우리가 즐거워하고 기뻐하리로다.",
+              descKo: "오늘 하루를 선물로 받아들이며, 기쁨의 이유를 하나님께 둘 수 있도록 도와줍니다.",
+              verseEn: "This is the day the Lord has made; let us rejoice and be glad in it.",
+              descEn: "This verse reminds you to receive today as God's gift and choose joy with gratitude."
+            },
+            {
+              reference: "빌립보서 4:4",
+              verseKo: "주 안에서 항상 기뻐하라 내가 다시 말하노니 기뻐하라.",
+              descKo: "상황이 아니라 주님 안에 뿌리내린 기쁨을 붙들게 합니다.",
+              verseEn: "Rejoice in the Lord always. I will say it again: Rejoice.",
+              descEn: "Joy rooted in the Lord can remain steady even when circumstances change."
+            }
+          ]
         },
         {
-          reference: "빌립보서 4:4",
-          verse: "주 안에서 항상 기뻐하라 내가 다시 말하노니 기뻐하라.",
-          description: "주님 안에서 누리는 기쁨은 흔들리는 감정 너머까지 이어집니다. 기쁨을 주변 사람에게도 흘려보내 보세요."
+          id: "sorrow",
+          ko: "슬픔",
+          en: "Sorrow",
+          image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "시편 34:18",
+              verseKo: "여호와는 마음이 상한 자를 가까이 하시고 충심으로 통회하는 자를 구원하시는도다.",
+              descKo: "상한 마음일수록 하나님이 멀어지는 것이 아니라 더 가까이하신다는 약속입니다.",
+              verseEn: "The Lord is close to the brokenhearted and saves those who are crushed in spirit.",
+              descEn: "God does not move away from your pain; He draws near to your broken heart."
+            },
+            {
+              reference: "시편 30:5",
+              verseKo: "저녁에는 울음이 깃들일지라도 아침에는 기쁨이 오리로다.",
+              descKo: "슬픔이 끝처럼 느껴져도 하나님의 시간에는 다시 아침이 옵니다.",
+              verseEn: "Weeping may remain for a night, but rejoicing comes in the morning.",
+              descEn: "Your sorrow is not final. God promises a new morning beyond this night."
+            }
+          ]
         },
         {
-          reference: "데살로니가전서 5:16",
-          verse: "항상 기뻐하라.",
-          description: "짧지만 강한 명령입니다. 하루 중 작은 순간에서도 은혜를 발견하는 연습이 기쁨을 깊게 만듭니다."
+          id: "lonely",
+          ko: "외로움",
+          en: "Loneliness",
+          image: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "이사야 41:10",
+              verseKo: "두려워하지 말라 내가 너와 함께 함이라... 참으로 나의 의로운 오른손으로 너를 붙들리라.",
+              descKo: "외로움 속에서도 하나님이 함께하신다는 사실이 마음의 버팀목이 됩니다.",
+              verseEn: "Do not fear, for I am with you... I will uphold you with my righteous right hand.",
+              descEn: "Even in loneliness, God's presence becomes your steady support."
+            },
+            {
+              reference: "히브리서 13:5",
+              verseKo: "내가 결코 너를 버리지 아니하고 너를 떠나지 아니하리라.",
+              descKo: "버려졌다는 감정이 올라올 때 붙들기 좋은 하나님의 직접적인 약속입니다.",
+              verseEn: "I will never leave you nor forsake you.",
+              descEn: "When abandonment rises in your heart, answer it with this unchanging promise."
+            }
+          ]
+        },
+        {
+          id: "anxious",
+          ko: "불안",
+          en: "Anxiety",
+          image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "빌립보서 4:6-7",
+              verseKo: "아무 것도 염려하지 말고... 너희 마음과 생각을 지키시리라.",
+              descKo: "염려를 억누르기보다 기도로 옮길 때 하나님의 평강이 마음을 지켜줍니다.",
+              verseEn: "Do not be anxious about anything... and the peace of God will guard your hearts and minds.",
+              descEn: "Move anxiety into prayer; God's peace will guard your inner life."
+            },
+            {
+              reference: "시편 56:3",
+              verseKo: "내가 두려워하는 날에는 내가 주를 의지하리이다.",
+              descKo: "불안이 없는 상태가 아니라 불안한 날에도 의지하는 선택을 배우게 합니다.",
+              verseEn: "When I am afraid, I put my trust in you.",
+              descEn: "Faith is not the absence of fear, but trust in God within fear."
+            }
+          ]
+        },
+        {
+          id: "tired",
+          ko: "지침",
+          en: "Exhaustion",
+          image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "마태복음 11:28",
+              verseKo: "수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라.",
+              descKo: "지친 날에는 더 버티기보다 주님께 나아가 쉬라는 초대가 필요합니다.",
+              verseEn: "Come to me, all you who are weary and burdened, and I will give you rest.",
+              descEn: "Jesus invites you not to perform more, but to come and receive rest."
+            },
+            {
+              reference: "이사야 40:31",
+              verseKo: "오직 여호와를 앙망하는 자는 새 힘을 얻으리니...",
+              descKo: "새 힘은 의지력보다 하나님을 바라보는 시선에서 시작됩니다.",
+              verseEn: "Those who hope in the Lord will renew their strength.",
+              descEn: "Renewed strength grows from waiting on God, not from pressure alone."
+            }
+          ]
+        },
+        {
+          id: "thankful",
+          ko: "감사",
+          en: "Thankfulness",
+          image: "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "데살로니가전서 5:18",
+              verseKo: "범사에 감사하라 이것이 그리스도 예수 안에서 너희를 향하신 하나님의 뜻이니라.",
+              descKo: "감사는 결과가 좋아서가 아니라 하나님을 신뢰하기에 선택하는 태도입니다.",
+              verseEn: "Give thanks in all circumstances; for this is God's will for you in Christ Jesus.",
+              descEn: "Gratitude is a faith decision, not merely a reaction to good outcomes."
+            },
+            {
+              reference: "시편 136:1",
+              verseKo: "여호와께 감사하라 그는 선하시며 그 인자하심이 영원함이로다.",
+              descKo: "변하지 않는 하나님의 선하심이 감사의 이유가 됩니다.",
+              verseEn: "Give thanks to the Lord, for he is good. His love endures forever.",
+              descEn: "God's unchanging goodness becomes the foundation of lasting gratitude."
+            }
+          ]
         }
       ],
-      "슬픔": [
+      situation: [
         {
-          reference: "시편 34:18",
-          verse: "여호와는 마음이 상한 자를 가까이 하시고 충심으로 통회하는 자를 구원하시는도다.",
-          description: "하나님은 무너진 마음을 외면하지 않으십니다. 지금의 눈물도 주님 앞에서는 기도의 언어가 됩니다."
+          id: "children",
+          ko: "자녀 문제",
+          en: "Children",
+          image: "https://images.unsplash.com/photo-1472162072942-cd5147eb3902?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "잠언 22:6",
+              verseKo: "마땅히 행할 길을 아이에게 가르치라 그리하면 늙어도 그것을 떠나지 아니하리라.",
+              descKo: "눈앞의 변화가 더뎌 보여도, 말씀 안에서 심은 방향은 자녀 안에 남습니다.",
+              verseEn: "Start children off on the way they should go, and even when they are old they will not turn from it.",
+              descEn: "Even if growth seems slow, faithful direction given in God remains in your child."
+            },
+            {
+              reference: "이사야 54:13",
+              verseKo: "네 모든 자녀는 여호와의 교훈을 받을 것이니 네 자녀에게는 큰 평강이 있을 것이며.",
+              descKo: "자녀를 붙들고 기도할 때, 하나님이 직접 가르치시고 평강을 주신다는 약속을 붙듭니다.",
+              verseEn: "All your children will be taught by the Lord, and great will be their peace.",
+              descEn: "As you pray for your children, hold onto God's promise to guide them Himself."
+            }
+          ]
         },
         {
-          reference: "요한복음 14:27",
-          verse: "평안을 너희에게 끼치노니 곧 나의 평안을 너희에게 주노라 내가 너희에게 주는 것은 세상이 주는 것과 같지 아니하니라 너희는 마음에 근심하지도 말고 두려워하지도 말라.",
-          description: "슬픔의 한가운데에서도 예수님의 평안은 머물 수 있습니다. 천천히 숨을 고르며 이 말씀을 다시 읽어보세요."
+          id: "spouse",
+          ko: "배우자 문제",
+          en: "Marriage",
+          image: "https://images.unsplash.com/photo-1529634597503-bd2f8577a6d5?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "에베소서 4:2-3",
+              verseKo: "모든 겸손과 온유로 하고 오래 참음으로 사랑 가운데서 서로 용납하고 평안의 매는 줄로 성령이 하나 되게 하신 것을 힘써 지키라.",
+              descKo: "관계 회복은 상대를 바꾸는 힘보다, 사랑 안에서 견디고 지키는 태도에서 시작됩니다.",
+              verseEn: "Be completely humble and gentle; be patient, bearing with one another in love.",
+              descEn: "Healing in marriage starts with humility, patience, and choosing love repeatedly."
+            },
+            {
+              reference: "골로새서 3:13-14",
+              verseKo: "누가 누구에게 불만이 있거든 서로 용납하여 피차 용서하되... 이 모든 것 위에 사랑을 더하라.",
+              descKo: "용서와 사랑은 감정이 풀린 뒤가 아니라, 관계를 살리기 위해 먼저 선택하는 순종입니다.",
+              verseEn: "Bear with each other and forgive one another... over all these virtues put on love.",
+              descEn: "Forgiveness is not denial of pain; it is a deliberate step toward restoration."
+            }
+          ]
         },
         {
-          reference: "시편 30:5",
-          verse: "그의 노염은 잠깐이요 그의 은총은 평생이로다 저녁에는 울음이 깃들일지라도 아침에는 기쁨이 오리로다.",
-          description: "지금은 밤처럼 느껴져도 하나님의 시간 속에는 반드시 아침이 있습니다. 끝이 아니라 과정임을 기억하게 합니다."
-        }
-      ],
-      "외로움": [
-        {
-          reference: "이사야 41:10",
-          verse: "두려워하지 말라 내가 너와 함께 함이라 놀라지 말라 나는 네 하나님이 됨이라 내가 너를 굳세게 하리라 참으로 너를 도와 주리라 참으로 나의 의로운 오른손으로 너를 붙들리라.",
-          description: "혼자라고 느끼는 순간에도 하나님의 임재는 끊어지지 않습니다. 붙들어 주신다는 약속을 오늘의 중심에 두세요."
+          id: "friends",
+          ko: "친구 관계",
+          en: "Friendship",
+          image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "잠언 17:17",
+              verseKo: "친구는 사랑이 끊어지지 아니하고 형제는 위급한 때를 위하여 났느니라.",
+              descKo: "진짜 관계는 편할 때보다 어려울 때 드러납니다. 신실함을 선택하게 돕는 말씀입니다.",
+              verseEn: "A friend loves at all times, and a brother is born for adversity.",
+              descEn: "True friendship is proven in hardship. Choose faithfulness over convenience."
+            },
+            {
+              reference: "로마서 12:18",
+              verseKo: "할 수 있거든 너희로서는 모든 사람과 더불어 화목하라.",
+              descKo: "내가 할 수 있는 평화의 몫을 먼저 감당하게 하는 실천적 기준이 됩니다.",
+              verseEn: "If it is possible, as far as it depends on you, live at peace with everyone.",
+              descEn: "This gives a practical boundary: do your part for peace with integrity."
+            }
+          ]
         },
         {
-          reference: "히브리서 13:5",
-          verse: "돈을 사랑하지 말고 있는 바를 족한 줄로 알라 그가 친히 말씀하시기를 내가 결코 너를 버리지 아니하고 너를 떠나지 아니하리라 하셨느니라.",
-          description: "하나님은 떠나지 않으시는 분이라는 선언입니다. 버려졌다는 생각이 올라올 때마다 이 말씀으로 반응해 보세요."
+          id: "health",
+          ko: "건강 문제",
+          en: "Health",
+          image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "예레미야 30:17",
+              verseKo: "여호와의 말씀이니라 내가 너를 치료하여 네 상처를 낫게 하리라.",
+              descKo: "몸과 마음의 상처를 하나님께 솔직히 올려드릴 수 있도록 용기를 줍니다.",
+              verseEn: "I will restore you to health and heal your wounds, declares the Lord.",
+              descEn: "Bring your weakness honestly before God and lean on His healing promise."
+            },
+            {
+              reference: "시편 103:2-3",
+              verseKo: "내 영혼아 여호와를 송축하며 그의 모든 은택을 잊지 말지어다 그가 네 모든 죄악을 사하시며 네 모든 병을 고치시며.",
+              descKo: "낙심 중에도 하나님이 베푸신 은혜를 기억할 때 다시 소망이 살아납니다.",
+              verseEn: "Praise the Lord... who forgives all your sins and heals all your diseases.",
+              descEn: "Remembering God's grace sustains hope when your body feels weak."
+            }
+          ]
         },
         {
-          reference: "시편 27:10",
-          verse: "내 부모는 나를 버렸으나 여호와는 나를 영접하시리이다.",
-          description: "인간관계의 빈자리가 커 보여도 주님은 우리를 받아주십니다. 존재의 안전함을 회복하게 하는 말씀입니다."
-        }
-      ],
-      "불안": [
-        {
-          reference: "빌립보서 4:6-7",
-          verse: "아무 것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라 그리하면 모든 지각에 뛰어난 하나님의 평강이 그리스도 예수 안에서 너희 마음과 생각을 지키시리라.",
-          description: "불안을 부정하기보다 기도로 옮겨 놓으라는 초대입니다. 걱정의 이름을 적고 한 줄 기도로 바꿔보세요."
+          id: "finance",
+          ko: "경제 문제",
+          en: "Finances",
+          image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "마태복음 6:33",
+              verseKo: "그런즉 너희는 먼저 그의 나라와 그의 의를 구하라 그리하면 이 모든 것을 너희에게 더하시리라.",
+              descKo: "필요 앞에서 먼저 순서를 바로 세울 때, 공급의 주권이 하나님께 있음을 다시 확인합니다.",
+              verseEn: "Seek first his kingdom and his righteousness, and all these things will be given to you as well.",
+              descEn: "Financial pressure becomes lighter when priorities return to God's kingdom first."
+            },
+            {
+              reference: "빌립보서 4:19",
+              verseKo: "나의 하나님이 그리스도 예수 안에서 영광 가운데 그 풍성한 대로 너희 모든 쓸 것을 채우시리라.",
+              descKo: "공급의 근원은 환경이 아니라 하나님이심을 기억하게 합니다.",
+              verseEn: "My God will meet all your needs according to the riches of his glory in Christ Jesus.",
+              descEn: "Your ultimate source is not circumstance but God's faithful provision."
+            }
+          ]
         },
         {
-          reference: "시편 56:3",
-          verse: "내가 두려워하는 날에는 내가 주를 의지하리이다.",
-          description: "두려움이 없어야 믿음이 있는 것이 아니라, 두려운 날에도 의지하는 것이 믿음임을 보여줍니다."
-        },
-        {
-          reference: "마태복음 6:34",
-          verse: "그러므로 내일 일을 위하여 염려하지 말라 내일 일은 내일이 염려할 것이요 한 날의 괴로움은 그 날로 족하니라.",
-          description: "통제할 수 없는 내일 대신 오늘 순종할 한 걸음에 집중하게 합니다. 지금 할 수 있는 가장 작은 선을 선택해 보세요."
-        }
-      ],
-      "두려움": [
-        {
-          reference: "디모데후서 1:7",
-          verse: "하나님이 우리에게 주신 것은 두려워하는 마음이 아니요 오직 능력과 사랑과 절제하는 마음이니.",
-          description: "하나님이 주신 정체성은 두려움이 아니라 능력과 사랑, 절제입니다. 마음의 방향을 다시 잡아줍니다."
-        },
-        {
-          reference: "여호수아 1:9",
-          verse: "내가 네게 명령한 것이 아니냐 강하고 담대하라 두려워하지 말며 놀라지 말라 네가 어디로 가든지 네 하나님 여호와가 너와 함께 하느니라 하시니라.",
-          description: "담대함의 근거는 내 강함이 아니라 하나님의 동행입니다. 중요한 결정을 앞둘 때 붙들기 좋은 말씀입니다."
-        },
-        {
-          reference: "시편 23:4",
-          verse: "내가 사망의 음침한 골짜기로 다닐지라도 해를 두려워하지 않을 것은 주께서 나와 함께 하심이라 주의 지팡이와 막대기가 나를 안위하시나이다.",
-          description: "어두운 골짜기를 지나도 동행하시는 주님이 안전의 이유가 됩니다. 두려움 속에서도 발걸음을 내딛게 합니다."
-        }
-      ],
-      "지침": [
-        {
-          reference: "마태복음 11:28",
-          verse: "수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라.",
-          description: "주님은 성과보다 먼저 쉼으로 초대하십니다. 버티는 신앙이 아니라 맡기는 신앙으로 전환해 보세요."
-        },
-        {
-          reference: "이사야 40:31",
-          verse: "오직 여호와를 앙망하는 자는 새 힘을 얻으리니 독수리가 날개치며 올라감 같을 것이요 달음박질하여도 곤비하지 아니하겠고 걸어가도 피곤하지 아니하리로다.",
-          description: "힘은 의지력만으로 채워지지 않습니다. 하나님을 바라보는 시선에서 새 힘이 시작된다는 약속입니다."
-        },
-        {
-          reference: "시편 46:1",
-          verse: "하나님은 우리의 피난처시요 힘이시니 환난 중에 만날 큰 도움이시라.",
-          description: "지친 날에 필요한 건 더 빠른 속도가 아니라 안전한 피난처입니다. 하나님 안에서 숨 고를 자리를 찾게 해줍니다."
-        }
-      ],
-      "감사": [
-        {
-          reference: "데살로니가전서 5:18",
-          verse: "범사에 감사하라 이것이 그리스도 예수 안에서 너희를 향하신 하나님의 뜻이니라.",
-          description: "감사는 상황의 평가가 아니라 믿음의 선택입니다. 하루의 평범한 장면 속에서 은혜의 흔적을 발견해 보세요."
-        },
-        {
-          reference: "시편 136:1",
-          verse: "여호와께 감사하라 그는 선하시며 그 인자하심이 영원함이로다.",
-          description: "하나님의 선하심과 인자하심은 감사의 뿌리입니다. 변하지 않는 성품이 오늘의 감사를 지탱해 줍니다."
-        },
-        {
-          reference: "골로새서 3:15",
-          verse: "그리스도의 평강이 너희 마음을 주장하게 하라 너희는 평강을 위하여 한 몸으로 부르심을 받았나니 너희는 또한 감사하는 자가 되라.",
-          description: "감사는 평강을 지키는 태도이기도 합니다. 관계 속에서 감사 한마디를 먼저 건네보는 실천으로 이어가 보세요."
-        }
-      ],
-      "분노": [
-        {
-          reference: "에베소서 4:26",
-          verse: "분을 내어도 죄를 짓지 말며 해가 지도록 분을 품지 말고.",
-          description: "분노 자체보다 그 분노를 어떻게 다루는지가 중요합니다. 감정을 오래 붙들기 전에 하나님께 내려놓는 연습이 필요합니다."
-        },
-        {
-          reference: "야고보서 1:19-20",
-          verse: "내 사랑하는 형제들아 너희가 알지니 사람마다 듣기는 속히 하고 말하기는 더디 하며 성내기도 더디 하라 사람이 성내는 것이 하나님의 의를 이루지 못함이라.",
-          description: "빠른 반응보다 느린 경청이 분노를 다스리는 시작점입니다. 말하기 전 잠깐 멈추는 지혜를 줍니다."
-        },
-        {
-          reference: "잠언 15:1",
-          verse: "유순한 대답은 분노를 쉬게 하여도 과격한 말은 노를 격동하느니라.",
-          description: "말의 온도는 상황의 온도를 바꿉니다. 부드러운 한마디가 갈등의 방향을 바꿀 수 있음을 상기시킵니다."
+          id: "future",
+          ko: "미래/진로",
+          en: "Future/Career",
+          image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&q=80",
+          verses: [
+            {
+              reference: "잠언 3:5-6",
+              verseKo: "너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라 너는 범사에 그를 인정하라 그리하면 네 길을 지도하시리라.",
+              descKo: "앞이 보이지 않을수록 계산보다 신뢰로 한 걸음씩 가도록 이끌어 줍니다.",
+              verseEn: "Trust in the Lord with all your heart... and he will make your paths straight.",
+              descEn: "When the future is unclear, choose trust over self-reliance one step at a time."
+            },
+            {
+              reference: "예레미야 29:11",
+              verseKo: "여호와의 말씀이니라 너희를 향한 나의 생각을 내가 아나니 평안이요 재앙이 아니니라 너희에게 미래와 희망을 주는 것이니라.",
+              descKo: "불확실함 속에서도 하나님은 우리를 향한 선한 뜻과 소망을 가지고 계십니다.",
+              verseEn: "For I know the plans I have for you... plans to give you hope and a future.",
+              descEn: "God's intention for you is rooted in hope, even in seasons of uncertainty."
+            }
+          ]
         }
       ]
     };
 
-    const moodGrid = document.getElementById("moodGrid");
+    const sectionSwitch = document.getElementById("sectionSwitch");
+    const optionGrid = document.getElementById("optionGrid");
     const recommendBtn = document.getElementById("recommendBtn");
     const anotherBtn = document.getElementById("anotherBtn");
     const resultBox = document.getElementById("resultBox");
 
-    const moods = Object.keys(verseByMood);
-    const moodImageByKey = {
-      "기쁨": "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=1200&q=80",
-      "슬픔": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
-      "외로움": "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=80",
-      "불안": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80",
-      "두려움": "https://images.unsplash.com/photo-1433863448220-78aaa064ff47?auto=format&fit=crop&w=1200&q=80",
-      "지침": "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1200&q=80",
-      "감사": "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1200&q=80",
-      "분노": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80"
-    };
-    let selectedMood = "";
+    const titleText = document.getElementById("titleText");
+    const subtitleText = document.getElementById("subtitleText");
+    const selectLabel = document.getElementById("selectLabel");
+    const emptyText = document.getElementById("emptyText");
+    const footerText = document.getElementById("footerText");
+    const langKoBtn = document.getElementById("langKoBtn");
+    const langEnBtn = document.getElementById("langEnBtn");
+
+    let lang = "ko";
+    let selectedSection = "mood";
+    let selectedOptionId = "";
     let lastIndex = -1;
     let loadingTimer = null;
+    let lastPicked = null;
 
-    function renderMoodButtons() {
-      moods.forEach((mood) => {
-        const button = document.createElement("button");
-        button.className = "mood-btn";
-        button.textContent = mood;
-        button.type = "button";
+    function t(key) {
+      return uiText[lang][key];
+    }
 
-        button.addEventListener("click", () => {
-          if (loadingTimer) {
-            clearTimeout(loadingTimer);
-            loadingTimer = null;
+    const bookNameMapKoToEn = {
+      "시편": "Psalms",
+      "빌립보서": "Philippians",
+      "데살로니가전서": "1 Thessalonians",
+      "이사야": "Isaiah",
+      "히브리서": "Hebrews",
+      "마태복음": "Matthew",
+      "잠언": "Proverbs",
+      "예레미야": "Jeremiah",
+      "에베소서": "Ephesians",
+      "골로새서": "Colossians",
+      "로마서": "Romans"
+    };
+
+    function getReferenceByLanguage(reference) {
+      if (lang === "ko") {
+        return reference;
+      }
+      const match = reference.match(/^([^\d]+)\s*(.+)$/);
+      if (!match) {
+        return reference;
+      }
+      const koBook = match[1].trim();
+      const chapterVerse = match[2].trim();
+      const enBook = bookNameMapKoToEn[koBook];
+      if (!enBook) {
+        return reference;
+      }
+      return `${enBook} ${chapterVerse}`;
+    }
+
+    function currentOptions() {
+      return verseLibrary[selectedSection];
+    }
+
+    function findSelectedOption() {
+      return currentOptions().find((item) => item.id === selectedOptionId) || null;
+    }
+
+    function clearLoading() {
+      if (loadingTimer) {
+        clearTimeout(loadingTimer);
+        loadingTimer = null;
+      }
+      resultBox.classList.remove("loading");
+    }
+
+    function renderHeaderTexts() {
+      document.documentElement.lang = lang === "ko" ? "ko" : "en";
+      document.title = t("pageTitle");
+      titleText.textContent = t("pageTitle");
+      subtitleText.textContent = t("subtitle");
+      recommendBtn.textContent = t("recommend");
+      anotherBtn.textContent = t("another");
+      footerText.textContent = t("footer");
+      selectLabel.textContent = selectedSection === "mood" ? t("labelMood") : t("labelSituation");
+
+      langKoBtn.classList.toggle("active", lang === "ko");
+      langEnBtn.classList.toggle("active", lang === "en");
+    }
+
+    function renderSectionSwitch() {
+      sectionSwitch.innerHTML = "";
+
+      const sections = [
+        { id: "mood", label: t("sectionMood") },
+        { id: "situation", label: t("sectionSituation") }
+      ];
+
+      sections.forEach((section) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "section-btn";
+        btn.textContent = section.label;
+        btn.classList.toggle("active", selectedSection === section.id);
+
+        btn.addEventListener("click", () => {
+          if (selectedSection === section.id) {
+            return;
           }
-          selectedMood = mood;
+          clearLoading();
+          selectedSection = section.id;
+          selectedOptionId = "";
           lastIndex = -1;
-          document.querySelectorAll(".mood-btn").forEach((btn) => btn.classList.remove("active"));
-          button.classList.add("active");
-          recommendBtn.disabled = false;
+          lastPicked = null;
+          recommendBtn.disabled = true;
           anotherBtn.disabled = true;
-          resultBox.innerHTML = "<p class='empty'>선택한 감정에 맞춰 말씀을 추천할 준비가 되었어요. <strong>말씀 추천받기</strong>를 눌러주세요.</p>";
-          resultBox.classList.remove("loading");
+          renderSectionSwitch();
+          renderHeaderTexts();
+          renderOptionButtons();
+          showEmpty();
         });
 
-        moodGrid.appendChild(button);
+        sectionSwitch.appendChild(btn);
       });
     }
 
-    function pickVerse(mood) {
-      const verses = verseByMood[mood];
-      if (!verses || verses.length === 0) {
+    function renderOptionButtons() {
+      optionGrid.innerHTML = "";
+      const options = currentOptions();
+
+      options.forEach((option) => {
+        const button = document.createElement("button");
+        button.className = "option-btn";
+        button.type = "button";
+        button.textContent = lang === "ko" ? option.ko : option.en;
+        button.classList.toggle("active", selectedOptionId === option.id);
+
+        button.addEventListener("click", () => {
+          clearLoading();
+          selectedOptionId = option.id;
+          lastIndex = -1;
+          lastPicked = null;
+          recommendBtn.disabled = false;
+          anotherBtn.disabled = true;
+          renderOptionButtons();
+          showReady();
+        });
+
+        optionGrid.appendChild(button);
+      });
+    }
+
+    function pickVerse(option) {
+      if (!option || !option.verses || option.verses.length === 0) {
         return null;
       }
-
-      let idx = Math.floor(Math.random() * verses.length);
-      if (verses.length > 1) {
+      let idx = Math.floor(Math.random() * option.verses.length);
+      if (option.verses.length > 1) {
         while (idx === lastIndex) {
-          idx = Math.floor(Math.random() * verses.length);
+          idx = Math.floor(Math.random() * option.verses.length);
         }
       }
       lastIndex = idx;
-      return verses[idx];
+      return option.verses[idx];
+    }
+
+    function showEmpty() {
+      resultBox.innerHTML = `<p class="empty">${t("empty")}</p>`;
+      resultBox.classList.remove("loading");
+    }
+
+    function showReady() {
+      resultBox.innerHTML = `<p class="empty">${t("ready")}</p>`;
+      resultBox.classList.remove("loading");
+    }
+
+    function renderResultCard(option, picked) {
+      const optionName = lang === "ko" ? option.ko : option.en;
+      const chipLabel = selectedSection === "mood" ? t("chipMood") : t("chipSituation");
+      const verseText = lang === "ko" ? picked.verseKo : picked.verseEn;
+      const descText = lang === "ko" ? picked.descKo : picked.descEn;
+      const referenceText = getReferenceByLanguage(picked.reference);
+      const altText = lang === "ko"
+        ? `${optionName}에 어울리는 성경 묵상 이미지`
+        : `Bible meditation image for ${optionName}`;
+
+      resultBox.classList.remove("loading");
+      resultBox.innerHTML = `
+        <img class="verse-visual fade-in" src="${option.image}" alt="${altText}" loading="lazy" />
+        <span class="chip fade-in">${chipLabel}: ${optionName}</span>
+        <blockquote class="fade-in">${verseText}</blockquote>
+        <div class="ref fade-in">${referenceText} (${t("version")})</div>
+        <p class="desc fade-in">${descText}</p>
+      `;
     }
 
     function renderVerse() {
-      if (!selectedMood) {
+      const option = findSelectedOption();
+      if (!option) {
         return;
       }
 
-      const picked = pickVerse(selectedMood);
+      const picked = pickVerse(option);
       if (!picked) {
-        resultBox.innerHTML = "<p class='empty'>해당 감정에 대한 말씀이 아직 준비되지 않았습니다.</p>";
+        resultBox.innerHTML = `<p class="empty">${t("notReady")}</p>`;
         return;
       }
 
-      if (loadingTimer) {
-        clearTimeout(loadingTimer);
-      }
-
+      clearLoading();
       recommendBtn.disabled = true;
       anotherBtn.disabled = true;
       resultBox.classList.add("loading");
       resultBox.innerHTML = `
         <div class="loading-wrap">
           <div class="spinner" aria-hidden="true"></div>
-          <p class="loading-text">말씀을 찾고 있습니다...</p>
+          <p class="loading-text">${t("loading")}</p>
         </div>
       `;
 
       const delay = 1200 + Math.floor(Math.random() * 900);
       loadingTimer = setTimeout(() => {
-        const moodImage = moodImageByKey[selectedMood] || moodImageByKey["감사"];
-        resultBox.classList.remove("loading");
-        resultBox.innerHTML = `
-          <img class="verse-visual fade-in" src="${moodImage}" alt="감정 ${selectedMood}에 어울리는 성경 묵상 이미지" loading="lazy" />
-          <span class="chip fade-in">감정: ${selectedMood}</span>
-          <blockquote class="fade-in">${picked.verse}</blockquote>
-          <div class="ref fade-in">${picked.reference} (개역개정)</div>
-          <p class="desc fade-in">${picked.description}</p>
-        `;
+        lastPicked = { optionId: option.id, verse: picked };
+        renderResultCard(option, picked);
+
         recommendBtn.disabled = false;
         anotherBtn.disabled = false;
         loadingTimer = null;
       }, delay);
     }
 
+    langKoBtn.addEventListener("click", () => {
+      if (lang === "ko") {
+        return;
+      }
+      lang = "ko";
+      renderHeaderTexts();
+      renderSectionSwitch();
+      renderOptionButtons();
+      const option = findSelectedOption();
+      if (option && lastPicked && lastPicked.optionId === option.id) {
+        renderResultCard(option, lastPicked.verse);
+      } else if (!selectedOptionId) {
+        showEmpty();
+      } else {
+        showReady();
+      }
+    });
+
+    langEnBtn.addEventListener("click", () => {
+      if (lang === "en") {
+        return;
+      }
+      lang = "en";
+      renderHeaderTexts();
+      renderSectionSwitch();
+      renderOptionButtons();
+      const option = findSelectedOption();
+      if (option && lastPicked && lastPicked.optionId === option.id) {
+        renderResultCard(option, lastPicked.verse);
+      } else if (!selectedOptionId) {
+        showEmpty();
+      } else {
+        showReady();
+      }
+    });
+
     recommendBtn.addEventListener("click", renderVerse);
     anotherBtn.addEventListener("click", renderVerse);
 
-    renderMoodButtons();
+    renderHeaderTexts();
+    renderSectionSwitch();
+    renderOptionButtons();
+    showEmpty();
   </script>
 </body>
 </html>
