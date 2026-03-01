@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오늘 당신을 위한 성경말씀</title>
+  <style>
+    :root {
+      --bg-1: #f8f4ea;
+      --bg-2: #e9f1ef;
+      --card: #ffffff;
+      --text: #1f2937;
+      --sub: #4b5563;
+      --primary: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --border: #d1d5db;
+      --shadow: 0 12px 28px rgba(17, 24, 39, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top left, var(--bg-2) 0%, var(--bg-1) 52%, #fdfdfd 100%);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .app {
+      width: min(820px, 100%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .header {
+      padding: 28px 24px 18px;
+      background: linear-gradient(120deg, #fef3c7 0%, #e0f2fe 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.6vw, 2rem);
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--sub);
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    .hero-image {
+      margin-top: 14px;
+      height: 140px;
+      border-radius: 14px;
+      border: 1px solid #bfdbfe;
+      background-image:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.75)),
+        url("https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .content {
+      padding: 22px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .label {
+      font-weight: 700;
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+    }
+
+    .mood-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    }
+
+    .mood-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .mood-btn:hover {
+      border-color: #93c5fd;
+      transform: translateY(-1px);
+    }
+
+    .mood-btn.active {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+      color: #1e3a8a;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: opacity 0.16s ease;
+    }
+
+    .primary-btn {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .ghost-btn {
+      background: #f3f4f6;
+      color: #111827;
+      border: 1px solid var(--border);
+    }
+
+    .primary-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .result {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: #fcfcfd;
+      display: grid;
+      gap: 12px;
+      min-height: 200px;
+      align-content: start;
+    }
+
+    .result.loading {
+      place-items: center;
+      align-content: center;
+      background: #f8fafc;
+    }
+
+    .empty {
+      color: var(--sub);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .chip {
+      display: inline-block;
+      width: fit-content;
+      font-size: 0.84rem;
+      color: #334155;
+      background: #e2e8f0;
+      border-radius: 999px;
+      padding: 5px 10px;
+    }
+
+    .verse-visual {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+    }
+
+    blockquote {
+      margin: 0;
+      padding: 14px;
+      border-left: 4px solid #93c5fd;
+      background: #eff6ff;
+      border-radius: 10px;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .ref {
+      font-size: 0.9rem;
+      color: #1e3a8a;
+      font-weight: 700;
+    }
+
+    .desc {
+      margin: 0;
+      color: var(--sub);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .loading-wrap {
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      color: #334155;
+      text-align: center;
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 3px solid #bfdbfe;
+      border-top-color: #1d4ed8;
+      animation: spin 0.9s linear infinite;
+    }
+
+    .loading-text {
+      margin: 0;
+      font-size: 0.92rem;
+      color: #334155;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.45s ease both;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer {
+      padding: 0 22px 20px;
+      color: #6b7280;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 560px) {
+      .content {
+        padding: 18px;
+      }
+
+      .header {
+        padding: 22px 18px 14px;
+      }
+
+      .footer {
+        padding: 0 18px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <h1>오늘 당신을 위한 성경말씀</h1>
+      <p class="subtitle">지금 감정에 맞는 개역개정 성경구절과 짧은 묵상 포인트를 추천해드립니다.</p>
+      <div class="hero-image" aria-label="성경 관련 이미지"></div>
+    </header>
+
+    <section class="content">
+      <div>
+        <p class="label">오늘 내 마음은 어떤가요?</p>
+        <div class="mood-grid" id="moodGrid"></div>
+      </div>
+
+      <div class="actions">
+        <button class="primary-btn" id="recommendBtn" disabled>말씀 추천받기</button>
+        <button class="ghost-btn" id="anotherBtn" disabled>다른 구절 보기</button>
+      </div>
+
+      <section class="result" id="resultBox">
+        <p class="empty">감정을 먼저 선택하신 뒤 <strong>말씀 추천받기</strong> 버튼을 눌러주세요.</p>
+      </section>
+    </section>
+
+    <footer class="footer">
+      본 앱은 개역개정 성경 본문 일부를 인용하여 개인 묵상용으로 제공합니다.
+    </footer>
+  </main>
+
+  <script>
+    const verseByMood = {
+      "기쁨": [
+        {
+          reference: "시편 118:24",
+          verse: "이 날은 여호와께서 정하신 것이라 이 날에 우리가 즐거워하고 기뻐하리로다.",
+          description: "기쁨의 이유가 상황이 아니라 하나님께 있다는 사실을 붙들게 해 줍니다. 오늘의 감사 제목을 한 가지 적어보세요."
+        },
+        {
+          reference: "빌립보서 4:4",
+          verse: "주 안에서 항상 기뻐하라 내가 다시 말하노니 기뻐하라.",
+          description: "주님 안에서 누리는 기쁨은 흔들리는 감정 너머까지 이어집니다. 기쁨을 주변 사람에게도 흘려보내 보세요."
+        },
+        {
+          reference: "데살로니가전서 5:16",
+          verse: "항상 기뻐하라.",
+          description: "짧지만 강한 명령입니다. 하루 중 작은 순간에서도 은혜를 발견하는 연습이 기쁨을 깊게 만듭니다."
+        }
+      ],
+      "슬픔": [
+        {
+          reference: "시편 34:18",
+          verse: "여호와는 마음이 상한 자를 가까이 하시고 충심으로 통회하는 자를 구원하시는도다.",
+          description: "하나님은 무너진 마음을 외면하지 않으십니다. 지금의 눈물도 주님 앞에서는 기도의 언어가 됩니다."
+        },
+        {
+          reference: "요한복음 14:27",
+          verse: "평안을 너희에게 끼치노니 곧 나의 평안을 너희에게 주노라 내가 너희에게 주는 것은 세상이 주는 것과 같지 아니하니라 너희는 마음에 근심하지도 말고 두려워하지도 말라.",
+          description: "슬픔의 한가운데에서도 예수님의 평안은 머물 수 있습니다. 천천히 숨을 고르며 이 말씀을 다시 읽어보세요."
+        },
+        {
+          reference: "시편 30:5",
+          verse: "그의 노염은 잠깐이요 그의 은총은 평생이로다 저녁에는 울음이 깃들일지라도 아침에는 기쁨이 오리로다.",
+          description: "지금은 밤처럼 느껴져도 하나님의 시간 속에는 반드시 아침이 있습니다. 끝이 아니라 과정임을 기억하게 합니다."
+        }
+      ],
+      "외로움": [
+        {
+          reference: "이사야 41:10",
+          verse: "두려워하지 말라 내가 너와 함께 함이라 놀라지 말라 나는 네 하나님이 됨이라 내가 너를 굳세게 하리라 참으로 너를 도와 주리라 참으로 나의 의로운 오른손으로 너를 붙들리라.",
+          description: "혼자라고 느끼는 순간에도 하나님의 임재는 끊어지지 않습니다. 붙들어 주신다는 약속을 오늘의 중심에 두세요."
+        },
+        {
+          reference: "히브리서 13:5",
+          verse: "돈을 사랑하지 말고 있는 바를 족한 줄로 알라 그가 친히 말씀하시기를 내가 결코 너를 버리지 아니하고 너를 떠나지 아니하리라 하셨느니라.",
+          description: "하나님은 떠나지 않으시는 분이라는 선언입니다. 버려졌다는 생각이 올라올 때마다 이 말씀으로 반응해 보세요."
+        },
+        {
+          reference: "시편 27:10",
+          verse: "내 부모는 나를 버렸으나 여호와는 나를 영접하시리이다.",
+          description: "인간관계의 빈자리가 커 보여도 주님은 우리를 받아주십니다. 존재의 안전함을 회복하게 하는 말씀입니다."
+        }
+      ],
+      "불안": [
+        {
+          reference: "빌립보서 4:6-7",
+          verse: "아무 것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라 그리하면 모든 지각에 뛰어난 하나님의 평강이 그리스도 예수 안에서 너희 마음과 생각을 지키시리라.",
+          description: "불안을 부정하기보다 기도로 옮겨 놓으라는 초대입니다. 걱정의 이름을 적고 한 줄 기도로 바꿔보세요."
+        },
+        {
+          reference: "시편 56:3",
+          verse: "내가 두려워하는 날에는 내가 주를 의지하리이다.",
+          description: "두려움이 없어야 믿음이 있는 것이 아니라, 두려운 날에도 의지하는 것이 믿음임을 보여줍니다."
+        },
+        {
+          reference: "마태복음 6:34",
+          verse: "그러므로 내일 일을 위하여 염려하지 말라 내일 일은 내일이 염려할 것이요 한 날의 괴로움은 그 날로 족하니라.",
+          description: "통제할 수 없는 내일 대신 오늘 순종할 한 걸음에 집중하게 합니다. 지금 할 수 있는 가장 작은 선을 선택해 보세요."
+        }
+      ],
+      "두려움": [
+        {
+          reference: "디모데후서 1:7",
+          verse: "하나님이 우리에게 주신 것은 두려워하는 마음이 아니요 오직 능력과 사랑과 절제하는 마음이니.",
+          description: "하나님이 주신 정체성은 두려움이 아니라 능력과 사랑, 절제입니다. 마음의 방향을 다시 잡아줍니다."
+        },
+        {
+          reference: "여호수아 1:9",
+          verse: "내가 네게 명령한 것이 아니냐 강하고 담대하라 두려워하지 말며 놀라지 말라 네가 어디로 가든지 네 하나님 여호와가 너와 함께 하느니라 하시니라.",
+          description: "담대함의 근거는 내 강함이 아니라 하나님의 동행입니다. 중요한 결정을 앞둘 때 붙들기 좋은 말씀입니다."
+        },
+        {
+          reference: "시편 23:4",
+          verse: "내가 사망의 음침한 골짜기로 다닐지라도 해를 두려워하지 않을 것은 주께서 나와 함께 하심이라 주의 지팡이와 막대기가 나를 안위하시나이다.",
+          description: "어두운 골짜기를 지나도 동행하시는 주님이 안전의 이유가 됩니다. 두려움 속에서도 발걸음을 내딛게 합니다."
+        }
+      ],
+      "지침": [
+        {
+          reference: "마태복음 11:28",
+          verse: "수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라.",
+          description: "주님은 성과보다 먼저 쉼으로 초대하십니다. 버티는 신앙이 아니라 맡기는 신앙으로 전환해 보세요."
+        },
+        {
+          reference: "이사야 40:31",
+          verse: "오직 여호와를 앙망하는 자는 새 힘을 얻으리니 독수리가 날개치며 올라감 같을 것이요 달음박질하여도 곤비하지 아니하겠고 걸어가도 피곤하지 아니하리로다.",
+          description: "힘은 의지력만으로 채워지지 않습니다. 하나님을 바라보는 시선에서 새 힘이 시작된다는 약속입니다."
+        },
+        {
+          reference: "시편 46:1",
+          verse: "하나님은 우리의 피난처시요 힘이시니 환난 중에 만날 큰 도움이시라.",
+          description: "지친 날에 필요한 건 더 빠른 속도가 아니라 안전한 피난처입니다. 하나님 안에서 숨 고를 자리를 찾게 해줍니다."
+        }
+      ],
+      "감사": [
+        {
+          reference: "데살로니가전서 5:18",
+          verse: "범사에 감사하라 이것이 그리스도 예수 안에서 너희를 향하신 하나님의 뜻이니라.",
+          description: "감사는 상황의 평가가 아니라 믿음의 선택입니다. 하루의 평범한 장면 속에서 은혜의 흔적을 발견해 보세요."
+        },
+        {
+          reference: "시편 136:1",
+          verse: "여호와께 감사하라 그는 선하시며 그 인자하심이 영원함이로다.",
+          description: "하나님의 선하심과 인자하심은 감사의 뿌리입니다. 변하지 않는 성품이 오늘의 감사를 지탱해 줍니다."
+        },
+        {
+          reference: "골로새서 3:15",
+          verse: "그리스도의 평강이 너희 마음을 주장하게 하라 너희는 평강을 위하여 한 몸으로 부르심을 받았나니 너희는 또한 감사하는 자가 되라.",
+          description: "감사는 평강을 지키는 태도이기도 합니다. 관계 속에서 감사 한마디를 먼저 건네보는 실천으로 이어가 보세요."
+        }
+      ],
+      "분노": [
+        {
+          reference: "에베소서 4:26",
+          verse: "분을 내어도 죄를 짓지 말며 해가 지도록 분을 품지 말고.",
+          description: "분노 자체보다 그 분노를 어떻게 다루는지가 중요합니다. 감정을 오래 붙들기 전에 하나님께 내려놓는 연습이 필요합니다."
+        },
+        {
+          reference: "야고보서 1:19-20",
+          verse: "내 사랑하는 형제들아 너희가 알지니 사람마다 듣기는 속히 하고 말하기는 더디 하며 성내기도 더디 하라 사람이 성내는 것이 하나님의 의를 이루지 못함이라.",
+          description: "빠른 반응보다 느린 경청이 분노를 다스리는 시작점입니다. 말하기 전 잠깐 멈추는 지혜를 줍니다."
+        },
+        {
+          reference: "잠언 15:1",
+          verse: "유순한 대답은 분노를 쉬게 하여도 과격한 말은 노를 격동하느니라.",
+          description: "말의 온도는 상황의 온도를 바꿉니다. 부드러운 한마디가 갈등의 방향을 바꿀 수 있음을 상기시킵니다."
+        }
+      ]
+    };
+
+    const moodGrid = document.getElementById("moodGrid");
+    const recommendBtn = document.getElementById("recommendBtn");
+    const anotherBtn = document.getElementById("anotherBtn");
+    const resultBox = document.getElementById("resultBox");
+
+    const moods = Object.keys(verseByMood);
+    const moodImageByKey = {
+      "기쁨": "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=1200&q=80",
+      "슬픔": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+      "외로움": "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1200&q=80",
+      "불안": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80",
+      "두려움": "https://images.unsplash.com/photo-1433863448220-78aaa064ff47?auto=format&fit=crop&w=1200&q=80",
+      "지침": "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1200&q=80",
+      "감사": "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1200&q=80",
+      "분노": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80"
+    };
+    let selectedMood = "";
+    let lastIndex = -1;
+    let loadingTimer = null;
+
+    function renderMoodButtons() {
+      moods.forEach((mood) => {
+        const button = document.createElement("button");
+        button.className = "mood-btn";
+        button.textContent = mood;
+        button.type = "button";
+
+        button.addEventListener("click", () => {
+          if (loadingTimer) {
+            clearTimeout(loadingTimer);
+            loadingTimer = null;
+          }
+          selectedMood = mood;
+          lastIndex = -1;
+          document.querySelectorAll(".mood-btn").forEach((btn) => btn.classList.remove("active"));
+          button.classList.add("active");
+          recommendBtn.disabled = false;
+          anotherBtn.disabled = true;
+          resultBox.innerHTML = "<p class='empty'>선택한 감정에 맞춰 말씀을 추천할 준비가 되었어요. <strong>말씀 추천받기</strong>를 눌러주세요.</p>";
+          resultBox.classList.remove("loading");
+        });
+
+        moodGrid.appendChild(button);
+      });
+    }
+
+    function pickVerse(mood) {
+      const verses = verseByMood[mood];
+      if (!verses || verses.length === 0) {
+        return null;
+      }
+
+      let idx = Math.floor(Math.random() * verses.length);
+      if (verses.length > 1) {
+        while (idx === lastIndex) {
+          idx = Math.floor(Math.random() * verses.length);
+        }
+      }
+      lastIndex = idx;
+      return verses[idx];
+    }
+
+    function renderVerse() {
+      if (!selectedMood) {
+        return;
+      }
+
+      const picked = pickVerse(selectedMood);
+      if (!picked) {
+        resultBox.innerHTML = "<p class='empty'>해당 감정에 대한 말씀이 아직 준비되지 않았습니다.</p>";
+        return;
+      }
+
+      if (loadingTimer) {
+        clearTimeout(loadingTimer);
+      }
+
+      recommendBtn.disabled = true;
+      anotherBtn.disabled = true;
+      resultBox.classList.add("loading");
+      resultBox.innerHTML = `
+        <div class="loading-wrap">
+          <div class="spinner" aria-hidden="true"></div>
+          <p class="loading-text">말씀을 찾고 있습니다...</p>
+        </div>
+      `;
+
+      const delay = 1200 + Math.floor(Math.random() * 900);
+      loadingTimer = setTimeout(() => {
+        const moodImage = moodImageByKey[selectedMood] || moodImageByKey["감사"];
+        resultBox.classList.remove("loading");
+        resultBox.innerHTML = `
+          <img class="verse-visual fade-in" src="${moodImage}" alt="감정 ${selectedMood}에 어울리는 성경 묵상 이미지" loading="lazy" />
+          <span class="chip fade-in">감정: ${selectedMood}</span>
+          <blockquote class="fade-in">${picked.verse}</blockquote>
+          <div class="ref fade-in">${picked.reference} (개역개정)</div>
+          <p class="desc fade-in">${picked.description}</p>
+        `;
+        recommendBtn.disabled = false;
+        anotherBtn.disabled = false;
+        loadingTimer = null;
+      }, delay);
+    }
+
+    recommendBtn.addEventListener("click", renderVerse);
+    anotherBtn.addEventListener("click", renderVerse);
+
+    renderMoodButtons();
+  </script>
+</body>
+</html>
