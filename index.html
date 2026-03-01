@@ -685,163 +685,153 @@
       ]
     };
 
-    const supplementalVersePool = {
+    const supplementalVersePoolByOption = {
+      joy: [
+        { reference: "느헤미야 8:10", verseKo: "여호와로 인하여 기뻐하는 것이 너희의 힘이니라.", descKo: "기쁨이 감정이 아니라 영적 힘이 됨을 보여줍니다.", verseEn: "The joy of the Lord is your strength.", descEn: "Joy in the Lord becomes spiritual strength." },
+        { reference: "시편 16:11", verseKo: "주 앞에는 충만한 기쁨이 있고 주의 오른쪽에는 영원한 즐거움이 있나이다.", descKo: "참된 기쁨의 근원이 하나님께 있음을 선명히 합니다.", verseEn: "In your presence there is fullness of joy.", descEn: "True joy is found in God's presence." },
+        { reference: "로마서 15:13", verseKo: "소망의 하나님이 믿음 안에서 모든 기쁨과 평강을 너희에게 충만하게 하사.", descKo: "믿음 안에서 기쁨이 채워지도록 기도하게 합니다.", verseEn: "May the God of hope fill you with all joy and peace as you trust in him.", descEn: "As you trust God, joy and peace are filled in you." },
+        { reference: "요한복음 15:11", verseKo: "내 기쁨이 너희 안에 있어 너희 기쁨을 충만하게 하려 함이라.", descKo: "예수님의 기쁨이 내 안에 임하도록 초점을 맞춰 줍니다.", verseEn: "I have told you this so that my joy may be in you and that your joy may be complete.", descEn: "Jesus gives complete joy that remains." },
+        { reference: "시편 100:2", verseKo: "기쁨으로 여호와를 섬기며 노래하면서 그의 앞에 나아갈지어다.", descKo: "기쁨을 행동과 예배로 확장하게 합니다.", verseEn: "Worship the Lord with gladness; come before him with joyful songs.", descEn: "Joy grows when it turns into worship." },
+        { reference: "하박국 3:18", verseKo: "나는 여호와로 말미암아 즐거워하며 나의 구원의 하나님으로 말미암아 기뻐하리로다.", descKo: "환경보다 구원의 하나님을 기쁨의 이유로 둡니다.", verseEn: "Yet I will rejoice in the Lord, I will be joyful in God my Savior.", descEn: "Joy can stand even beyond circumstances." },
+        { reference: "이사야 61:10", verseKo: "내가 여호와로 말미암아 크게 기뻐하며 내 영혼이 나의 하나님으로 말미암아 즐거워하리니.", descKo: "영혼 깊은 곳의 기쁨을 회복하게 합니다.", verseEn: "I delight greatly in the Lord; my soul rejoices in my God.", descEn: "God restores deep joy in the soul." },
+        { reference: "베드로전서 1:8", verseKo: "말할 수 없는 영광스러운 즐거움으로 기뻐하니.", descKo: "믿음 안의 기쁨은 상황을 넘어설 수 있음을 알려줍니다.", verseEn: "You believe in him and are filled with an inexpressible and glorious joy.", descEn: "Faith can produce joy beyond words." }
+      ],
+      sorrow: [
+        { reference: "마태복음 5:4", verseKo: "애통하는 자는 복이 있나니 그들이 위로를 받을 것임이요.", descKo: "슬픔 가운데 있는 사람에게 주시는 직접적인 위로의 약속입니다.", verseEn: "Blessed are those who mourn, for they will be comforted.", descEn: "God promises comfort to those who grieve." },
+        { reference: "시편 147:3", verseKo: "상심한 자들을 고치시며 그들의 상처를 싸매시는도다.", descKo: "하나님이 마음의 상처를 직접 만지신다는 확신을 줍니다.", verseEn: "He heals the brokenhearted and binds up their wounds.", descEn: "God gently heals inner wounds." },
+        { reference: "요한복음 16:22", verseKo: "너희가 지금은 근심하나 내가 다시 너희를 보리니 너희 마음이 기쁠 것이요.", descKo: "슬픔 뒤에 오는 회복의 시간을 바라보게 합니다.", verseEn: "Now is your time of grief, but I will see you again and you will rejoice.", descEn: "Grief is real, but joy will return." },
+        { reference: "요한계시록 21:4", verseKo: "다시는 사망이 없고 애통하는 것이나 곡하는 것이나 아픈 것이 다시 있지 아니하리니.", descKo: "끝내 이루어질 완전한 위로를 기억하게 합니다.", verseEn: "There will be no more death or mourning or crying or pain.", descEn: "Final restoration is promised by God." },
+        { reference: "예레미야애가 3:22-23", verseKo: "여호와의 인자와 긍휼이 무궁하시므로 우리가 진멸되지 아니함이니이다.", descKo: "매일 새로운 긍휼이 오늘도 유효함을 붙들게 합니다.", verseEn: "His compassions never fail. They are new every morning.", descEn: "God's mercy is new even in hard days." },
+        { reference: "고린도후서 1:3-4", verseKo: "모든 환난 중에서 우리를 위로하사 우리로 하여금 위로하게 하시는 하나님.", descKo: "받은 위로가 다시 다른 이를 살리는 통로가 됩니다.", verseEn: "The God of all comfort... comforts us in all our troubles.", descEn: "God comforts you and makes you a comfort to others." },
+        { reference: "시편 42:11", verseKo: "내 영혼아 네가 어찌하여 낙심하며 어찌하여 내 속에서 불안해 하는가.", descKo: "낙심한 내면과 정직하게 대화하며 소망을 회복하게 합니다.", verseEn: "Why, my soul, are you downcast? Put your hope in God.", descEn: "This verse reorients despair toward hope." },
+        { reference: "이사야 61:3", verseKo: "슬퍼하는 자에게 화관을 주어 그 재를 대신하며 희락의 기름으로 그 슬픔을 대신하게 하시고.", descKo: "슬픔을 바꾸시는 하나님의 회복 능력을 선포합니다.", verseEn: "To bestow on them a crown of beauty instead of ashes.", descEn: "God can exchange deep grief for restoration." }
+      ],
+      lonely: [
+        { reference: "신명기 31:6", verseKo: "그는 너를 떠나지 아니하시며 버리지 아니하실 것임이라.", descKo: "혼자라는 감정이 올라올 때 붙드는 약속입니다.", verseEn: "He will never leave you nor forsake you.", descEn: "You are not abandoned; God stays with you." },
+        { reference: "여호수아 1:9", verseKo: "강하고 담대하라... 네 하나님 여호와가 너와 함께 하느니라.", descKo: "외로운 길에서도 동행하시는 주님을 기억하게 합니다.", verseEn: "Be strong and courageous... the Lord your God will be with you.", descEn: "God's presence gives courage in lonely seasons." },
+        { reference: "시편 27:10", verseKo: "내 부모는 나를 버렸으나 여호와는 나를 영접하시리이다.", descKo: "인간관계의 빈틈을 하나님이 채우심을 보여줍니다.", verseEn: "Though my father and mother forsake me, the Lord will receive me.", descEn: "God receives you even when people fail." },
+        { reference: "시편 139:7-10", verseKo: "내가 주의 영을 떠나 어디로 가며... 거기서도 주의 손이 나를 인도하시며.", descKo: "어디에 있든 하나님의 임재 밖에 있지 않음을 확인합니다.", verseEn: "Where can I go from your Spirit?... your hand will guide me.", descEn: "No place is outside God's presence." },
+        { reference: "요한복음 14:18", verseKo: "내가 너희를 고아와 같이 버려두지 아니하고 너희에게로 오리라.", descKo: "예수님은 우리를 방치하지 않으시는 분임을 강조합니다.", verseEn: "I will not leave you as orphans; I will come to you.", descEn: "Jesus does not leave you alone." },
+        { reference: "이사야 43:2", verseKo: "네가 물 가운데로 지날 때에 내가 너와 함께 할 것이라.", descKo: "어려운 통과의 시간에도 함께하시는 약속입니다.", verseEn: "When you pass through the waters, I will be with you.", descEn: "God is with you through deep waters." },
+        { reference: "스바냐 3:17", verseKo: "너의 하나님 여호와가 너의 가운데 계시니... 너로 말미암아 기쁨을 이기지 못하시며.", descKo: "하나님이 나를 기뻐하신다는 사실이 외로움을 녹입니다.", verseEn: "The Lord your God is with you... he will rejoice over you.", descEn: "God's delight over you counters loneliness." },
+        { reference: "마태복음 28:20", verseKo: "내가 세상 끝날까지 너희와 항상 함께 있으리라.", descKo: "매일의 삶 속 동행을 확신하게 해주는 말씀입니다.", verseEn: "Surely I am with you always, to the very end of the age.", descEn: "Christ's presence is constant, every day." }
+      ],
+      anxious: [
+        { reference: "베드로전서 5:7", verseKo: "너희 염려를 다 주께 맡기라 이는 그가 너희를 돌보심이라.", descKo: "걱정을 끌어안기보다 맡기도록 초대합니다.", verseEn: "Cast all your anxiety on him because he cares for you.", descEn: "Anxiety becomes lighter when surrendered to God." },
+        { reference: "요한복음 14:27", verseKo: "평안을 너희에게 끼치노니... 너희는 마음에 근심하지도 말고 두려워하지도 말라.", descKo: "세상 방식과 다른 예수님의 평안을 제시합니다.", verseEn: "Peace I leave with you... Do not let your hearts be troubled.", descEn: "Jesus offers a peace different from the world." },
+        { reference: "이사야 26:3", verseKo: "주께서 심지가 견고한 자를 평강하고 평강하도록 지키시리니.", descKo: "마음의 초점을 하나님께 둘 때 평안이 유지됩니다.", verseEn: "You will keep in perfect peace those whose minds are steadfast.", descEn: "Steady trust leads to steady peace." },
+        { reference: "마태복음 6:34", verseKo: "그러므로 내일 일을 위하여 염려하지 말라.", descKo: "내일의 불안을 오늘의 순종으로 바꾸게 합니다.", verseEn: "Do not worry about tomorrow.", descEn: "Bring tomorrow's worries into today's faithfulness." },
+        { reference: "시편 94:19", verseKo: "내 속에 근심이 많을 때에 주의 위안이 내 영혼을 즐겁게 하시나이다.", descKo: "불안이 많을수록 하나님의 위로가 더 선명해집니다.", verseEn: "When anxiety was great within me, your consolation brought me joy.", descEn: "God's comfort meets anxiety directly." },
+        { reference: "잠언 12:25", verseKo: "근심이 사람의 마음에 있으면 그것으로 번뇌하게 되나 선한 말은 그것을 즐겁게 하느니라.", descKo: "마음의 무게를 말씀의 선한 진리로 전환하게 합니다.", verseEn: "Anxiety weighs down the heart, but a kind word cheers it up.", descEn: "Truth and encouragement lift anxious hearts." },
+        { reference: "시편 55:22", verseKo: "네 짐을 여호와께 맡기라 그가 너를 붙드시고.", descKo: "불안의 짐을 하나님께 옮겨놓는 실천을 돕습니다.", verseEn: "Cast your cares on the Lord and he will sustain you.", descEn: "God sustains what you entrust to him." },
+        { reference: "이사야 41:13", verseKo: "내가 네 오른손을 붙들고 네게 이르기를 두려워하지 말라 내가 너를 도우리라.", descKo: "두려움 속에서도 도우시는 손을 의지하게 합니다.", verseEn: "I take hold of your right hand and say, Do not fear; I will help you.", descEn: "God's help is personal and near." }
+      ],
+      tired: [
+        { reference: "갈라디아서 6:9", verseKo: "우리가 선을 행하되 낙심하지 말지니 때가 이르면 거두리라.", descKo: "지친 과정 속에서도 포기하지 않도록 북돋웁니다.", verseEn: "Let us not become weary in doing good, for at the proper time we will reap a harvest.", descEn: "Don't quit; your faithful labor has a season." },
+        { reference: "시편 62:1", verseKo: "나의 영혼이 잠잠히 하나님만 바람이여 나의 구원이 그에게서 나오는도다.", descKo: "쉼은 멈춤이 아니라 하나님 앞의 잠잠함에서 시작됩니다.", verseEn: "Truly my soul finds rest in God; my salvation comes from him.", descEn: "Rest starts by quieting your soul before God." },
+        { reference: "출애굽기 33:14", verseKo: "내가 친히 가리라 내가 너를 쉬게 하리라.", descKo: "하나님의 동행이 진짜 쉼의 핵심임을 보여줍니다.", verseEn: "My Presence will go with you, and I will give you rest.", descEn: "God's presence is the source of true rest." },
+        { reference: "예레미야 31:25", verseKo: "내가 기진한 영혼을 만족하게 하며 모든 슬픈 영혼을 채워 주리라.", descKo: "소진된 마음을 주님이 다시 채우신다는 약속입니다.", verseEn: "I will refresh the weary and satisfy the faint.", descEn: "God refreshes exhausted hearts." },
+        { reference: "고린도후서 12:9", verseKo: "내 은혜가 네게 족하도다 이는 내 능력이 약한 데서 온전하여짐이라.", descKo: "약함을 부끄러워하지 않고 은혜를 의지하게 합니다.", verseEn: "My grace is sufficient for you, for my power is made perfect in weakness.", descEn: "Weakness becomes a place where grace works." },
+        { reference: "히브리서 12:3", verseKo: "피곤하여 낙심하지 않기 위하여 죄인들이 이같이 자기에게 거역한 일을 참으신 이를 생각하라.", descKo: "예수님을 바라볼 때 지친 마음에 인내가 다시 생깁니다.", verseEn: "Consider him... so that you will not grow weary and lose heart.", descEn: "Fixing your eyes on Christ renews endurance." },
+        { reference: "마가복음 6:31", verseKo: "너희는 따로 한적한 곳에 가서 잠깐 쉬어라.", descKo: "의도적인 쉼도 믿음의 순종임을 알려줍니다.", verseEn: "Come with me by yourselves to a quiet place and get some rest.", descEn: "Intentional rest is also obedience." },
+        { reference: "시편 73:26", verseKo: "내 육체와 마음은 쇠약하나 하나님은 내 마음의 반석이시요 영원한 분깃이시라.", descKo: "몸과 마음이 지쳐도 하나님이 중심을 붙드십니다.", verseEn: "My flesh and my heart may fail, but God is the strength of my heart.", descEn: "Even when you fail, God remains your strength." }
+      ],
+      thankful: [
+        { reference: "골로새서 3:17", verseKo: "무엇을 하든지 다 주 예수의 이름으로 하고 그를 힘입어 하나님 아버지께 감사하라.", descKo: "일상 전체를 감사의 예배로 연결시켜 줍니다.", verseEn: "Whatever you do... give thanks to God the Father through him.", descEn: "Gratitude can shape every part of daily life." },
+        { reference: "에베소서 5:20", verseKo: "범사에 우리 주 예수 그리스도의 이름으로 항상 아버지 하나님께 감사하며.", descKo: "감사를 일회성이 아닌 습관으로 세워 줍니다.", verseEn: "Always giving thanks to God the Father for everything.", descEn: "Thanksgiving becomes a daily rhythm." },
+        { reference: "시편 107:1", verseKo: "여호와께 감사하라 그는 선하시며 그 인자하심이 영원함이로다.", descKo: "감사의 이유를 하나님의 성품에 두게 합니다.", verseEn: "Give thanks to the Lord, for he is good; his love endures forever.", descEn: "Gratitude is rooted in God's goodness." },
+        { reference: "시편 100:4", verseKo: "감사함으로 그의 문에 들어가며 찬송함으로 그의 궁정에 들어가서.", descKo: "감사가 하나님께 나아가는 문이 됨을 보여줍니다.", verseEn: "Enter his gates with thanksgiving and his courts with praise.", descEn: "Thanksgiving opens the way to worship." },
+        { reference: "히브리서 12:28", verseKo: "은혜를 받자 이로 말미암아 경건함과 두려움으로 하나님을 기쁘시게 섬길지니.", descKo: "받은 은혜를 기억할 때 감사가 더욱 깊어집니다.", verseEn: "Let us be thankful, and so worship God acceptably.", descEn: "Remembered grace grows lasting gratitude." },
+        { reference: "역대상 16:34", verseKo: "여호와께 감사하라 그는 선하시며 그의 인자하심이 영원함이로다.", descKo: "변하지 않는 사랑이 감사의 근거가 됩니다.", verseEn: "Give thanks to the Lord, for he is good; his love endures forever.", descEn: "God's steadfast love sustains thankfulness." },
+        { reference: "시편 9:1", verseKo: "내가 전심으로 여호와께 감사하오며 주의 모든 기이한 일들을 전하리이다.", descKo: "감사를 고백에서 간증으로 확장하게 합니다.", verseEn: "I will give thanks to you, Lord, with all my heart.", descEn: "Wholehearted gratitude turns into testimony." },
+        { reference: "골로새서 4:2", verseKo: "기도를 계속하고 기도에 감사함으로 깨어 있으라.", descKo: "기도와 감사가 함께 갈 때 영적 균형이 세워집니다.", verseEn: "Devote yourselves to prayer, being watchful and thankful.", descEn: "Prayer and gratitude keep the heart awake." }
+      ],
+      children: [
+        { reference: "신명기 6:6-7", verseKo: "오늘 내가 네게 명하는 이 말씀을... 네 자녀에게 부지런히 가르치라.", descKo: "자녀 양육의 핵심이 말씀 교육임을 분명히 합니다.", verseEn: "Impress these commandments on your children.", descEn: "God's Word is central in parenting." },
+        { reference: "에베소서 6:4", verseKo: "오직 주의 교훈과 훈계로 양육하라.", descKo: "통제보다 양육의 방향을 제시합니다.", verseEn: "Bring them up in the training and instruction of the Lord.", descEn: "Parenting is spiritual formation, not just control." },
+        { reference: "시편 127:3", verseKo: "보라 자식들은 여호와의 기업이요.", descKo: "자녀를 소유가 아닌 하나님의 선물로 바라보게 합니다.", verseEn: "Children are a heritage from the Lord.", descEn: "Children are God's gift, not our possession." },
+        { reference: "요한삼서 1:4", verseKo: "내 자녀들이 진리 안에서 행한다 함을 듣는 것보다 더 큰 기쁨이 없도다.", descKo: "성공보다 진리 안의 성장을 우선순위로 세웁니다.", verseEn: "I have no greater joy than to hear that my children are walking in the truth.", descEn: "Truth-formed character matters most." },
+        { reference: "마태복음 19:14", verseKo: "어린 아이들을 용납하고 내게 오는 것을 금하지 말라.", descKo: "자녀를 예수님께 이끄는 것이 가장 큰 돌봄임을 보여줍니다.", verseEn: "Let the little children come to me.", descEn: "Lead children toward Jesus first." },
+        { reference: "잠언 1:8-9", verseKo: "네 아비의 훈계를 들으며 네 어미의 법을 떠나지 말라.", descKo: "가정의 가르침이 자녀 삶의 기초가 됨을 강조합니다.", verseEn: "Do not forsake your mother's teaching.", descEn: "Parental teaching shapes life foundations." },
+        { reference: "이사야 49:25", verseKo: "네 자녀를 내가 구원할 것임이라.", descKo: "자녀를 위한 중보기도에 소망을 더해 줍니다.", verseEn: "I will save your children.", descEn: "This strengthens hope in prayer for your children." },
+        { reference: "민수기 6:24-26", verseKo: "여호와는 네게 복을 주시고 너를 지키시기를 원하며.", descKo: "자녀를 축복하며 기도할 때 붙들기 좋은 말씀입니다.", verseEn: "The Lord bless you and keep you.", descEn: "A powerful blessing to pray over children." }
+      ],
+      spouse: [
+        { reference: "창세기 2:24", verseKo: "둘이 한 몸을 이룰지로다.", descKo: "부부 관계의 본질이 연합임을 다시 세워 줍니다.", verseEn: "The two will become one flesh.", descEn: "Marriage is built on covenant unity." },
+        { reference: "전도서 4:9-10", verseKo: "두 사람이 한 사람보다 나음은... 넘어지면 하나가 그 동무를 붙들어 일으키려니와.", descKo: "서로를 세우는 동역의 관점을 회복시킵니다.", verseEn: "Two are better than one... if either falls, one can help the other up.", descEn: "Marriage is mutual support and lifting each other." },
+        { reference: "고린도전서 13:4-7", verseKo: "사랑은 오래 참고 사랑은 온유하며...", descKo: "감정이 아닌 사랑의 실천 기준을 제시합니다.", verseEn: "Love is patient, love is kind...", descEn: "This gives practical standards for love." },
+        { reference: "에베소서 5:33", verseKo: "남편도 자기 아내 사랑하기를 자기 같이 하고 아내도 남편을 존경하라.", descKo: "사랑과 존중의 균형이 관계를 건강하게 만듭니다.", verseEn: "Each one must love his wife... and the wife must respect her husband.", descEn: "Love and respect together heal marriage." },
+        { reference: "베드로전서 3:7", verseKo: "지식을 따라 너희 아내와 동거하고...", descKo: "이해와 배려가 부부관계의 핵심임을 보여줍니다.", verseEn: "Be considerate as you live with your wives.", descEn: "Understanding and honor strengthen marriage." },
+        { reference: "골로새서 3:18-19", verseKo: "아내들아... 남편들아 아내를 사랑하며 괴롭게 하지 말라.", descKo: "서로를 향한 책임을 분명하게 알려 줍니다.", verseEn: "Wives... Husbands, love your wives and do not be harsh with them.", descEn: "Clear responsibilities protect the relationship." },
+        { reference: "잠언 18:22", verseKo: "아내를 얻는 자는 복을 얻고 여호와께 은총을 받는 자니라.", descKo: "배우자를 은혜의 선물로 바라보게 합니다.", verseEn: "He who finds a wife finds what is good and receives favor from the Lord.", descEn: "Spouse is seen as God's favor, not burden." },
+        { reference: "로마서 12:10", verseKo: "존경하기를 서로 먼저 하며.", descKo: "관계를 지키는 첫걸음은 서로를 높여 주는 태도입니다.", verseEn: "Honor one another above yourselves.", descEn: "Mutual honor resets marriage dynamics." }
+      ],
+      friends: [
+        { reference: "요한복음 15:13", verseKo: "사람이 친구를 위하여 자기 목숨을 버리면 이보다 더 큰 사랑이 없나니.", descKo: "진정한 우정의 깊이를 보여주는 말씀입니다.", verseEn: "Greater love has no one than this: to lay down one's life for one's friends.", descEn: "True friendship is sacrificial love." },
+        { reference: "잠언 27:17", verseKo: "철이 철을 날카롭게 하는 것 같이 사람이 그의 친구의 얼굴을 빛나게 하느니라.", descKo: "서로를 성장시키는 관계의 가치를 보여줍니다.", verseEn: "As iron sharpens iron, so one person sharpens another.", descEn: "Healthy friendship grows both people." },
+        { reference: "잠언 27:9", verseKo: "친구의 충성된 권고는 마음을 즐겁게 하느니라.", descKo: "진실한 조언을 주고받는 우정을 격려합니다.", verseEn: "The pleasantness of a friend springs from their heartfelt advice.", descEn: "Faithful counsel is a gift in friendship." },
+        { reference: "전도서 4:10", verseKo: "무너지면 그 동무가 일으켜 세우려니와.", descKo: "어려움 속에서 붙들어 주는 우정의 본질을 말합니다.", verseEn: "If either of them falls, one can help the other up.", descEn: "Friendship is proven in support." },
+        { reference: "잠언 13:20", verseKo: "지혜로운 자와 동행하면 지혜를 얻고.", descKo: "누구와 함께하느냐가 인생의 방향을 바꾼다는 교훈입니다.", verseEn: "Walk with the wise and become wise.", descEn: "Companions shape character and direction." },
+        { reference: "잠언 16:28", verseKo: "말쟁이는 친한 벗을 이간하느니라.", descKo: "관계를 해치는 말 습관을 경계하게 합니다.", verseEn: "A gossip separates close friends.", descEn: "Guard your words to protect friendship." },
+        { reference: "골로새서 3:13", verseKo: "서로 용납하여 피차 용서하되.", descKo: "우정을 오래 지키는 핵심이 용납과 용서임을 보여줍니다.", verseEn: "Bear with each other and forgive one another.", descEn: "Forgiveness preserves friendship." },
+        { reference: "히브리서 10:24", verseKo: "서로 돌아보아 사랑과 선행을 격려하며.", descKo: "친구 관계를 서로를 세우는 관계로 이끕니다.", verseEn: "Let us consider how we may spur one another on toward love and good deeds.", descEn: "Friendship should encourage growth and good works." }
+      ],
+      health: [
+        { reference: "이사야 53:5", verseKo: "그가 채찍에 맞음으로 우리는 나음을 받았도다.", descKo: "치유의 소망을 십자가 안에서 바라보게 합니다.", verseEn: "By his wounds we are healed.", descEn: "Healing hope is rooted in Christ's work." },
+        { reference: "예레미야 33:6", verseKo: "내가 그들에게 치료와 고침을 베풀어.", descKo: "하나님의 회복 약속을 붙들게 합니다.", verseEn: "I will bring health and healing to it.", descEn: "God promises restoration and healing." },
+        { reference: "시편 41:3", verseKo: "여호와께서 병상에서 그를 붙드시고.", descKo: "아픈 자리에서도 하나님이 붙드심을 확신하게 합니다.", verseEn: "The Lord sustains them on their sickbed.", descEn: "God sustains you in weakness." },
+        { reference: "출애굽기 15:26", verseKo: "나는 너희를 치료하는 여호와임이라.", descKo: "치유의 주권이 하나님께 있음을 기억하게 합니다.", verseEn: "I am the Lord, who heals you.", descEn: "The Lord is your healer." },
+        { reference: "잠언 17:22", verseKo: "마음의 즐거움은 양약이라도 심령의 근심은 뼈를 마르게 하느니라.", descKo: "몸과 마음의 연결을 지혜롭게 다루게 합니다.", verseEn: "A cheerful heart is good medicine.", descEn: "Inner health affects physical strength." },
+        { reference: "시편 6:2", verseKo: "여호와여 내가 수척하였사오니 내게 은혜를 베푸소서.", descKo: "약할 때 드리는 정직한 기도의 본이 됩니다.", verseEn: "Have mercy on me, Lord, for I am faint.", descEn: "Honest prayer is right in physical weakness." },
+        { reference: "마태복음 9:35", verseKo: "모든 병과 모든 약한 것을 고치시니라.", descKo: "예수님의 치유 사역을 통해 소망을 얻습니다.", verseEn: "He healed every disease and sickness.", descEn: "Jesus' ministry reveals God's healing heart." },
+        { reference: "히브리서 4:16", verseKo: "때를 따라 돕는 은혜를 얻기 위하여 은혜의 보좌 앞에 담대히 나아갈 것이니라.", descKo: "치료 과정에서도 필요한 은혜를 구하도록 이끕니다.", verseEn: "Approach God's throne of grace... to find grace to help in time of need.", descEn: "You can ask for timely grace in sickness." }
+      ],
+      finance: [
+        { reference: "잠언 3:9-10", verseKo: "네 재물과 네 소산물의 처음 익은 열매로 여호와를 공경하라.", descKo: "재정의 우선순위를 하나님께 두게 합니다.", verseEn: "Honor the Lord with your wealth.", descEn: "Put God first in your finances." },
+        { reference: "잠언 21:5", verseKo: "부지런한 자의 경영은 풍부함에 이를 것이나.", descKo: "성실한 계획이 재정 건강에 중요함을 알려줍니다.", verseEn: "The plans of the diligent lead to profit.", descEn: "Diligence and planning matter financially." },
+        { reference: "누가복음 6:38", verseKo: "주라 그리하면 너희에게 줄 것이니.", descKo: "나눔의 삶이 하나님의 공급 질서 안에 있음을 보여줍니다.", verseEn: "Give, and it will be given to you.", descEn: "Generosity aligns you with God's economy." },
+        { reference: "신명기 8:18", verseKo: "네 하나님 여호와를 기억하라 그가 네게 재물 얻을 능력을 주셨음이라.", descKo: "능력과 기회의 근원이 하나님께 있음을 상기합니다.", verseEn: "Remember the Lord your God, for it is he who gives you the ability to produce wealth.", descEn: "God is the source of ability and provision." },
+        { reference: "히브리서 13:5", verseKo: "돈을 사랑하지 말고 있는 바를 족한 줄로 알라.", descKo: "재정 압박 속에서도 마음의 기준을 바로 세웁니다.", verseEn: "Keep your lives free from the love of money and be content.", descEn: "Contentment protects your heart under pressure." },
+        { reference: "디모데전서 6:10", verseKo: "돈을 사랑함이 일만 악의 뿌리가 되나니.", descKo: "돈 자체보다 돈 사랑을 경계하게 합니다.", verseEn: "The love of money is a root of all kinds of evil.", descEn: "Guard your heart from loving money itself." },
+        { reference: "시편 37:25", verseKo: "내가 어려서부터 늙기까지 의인이 버림을 당하거나 그의 자손이 걸식함을 보지 못하였도다.", descKo: "하나님의 신실한 돌보심을 기억하게 합니다.", verseEn: "I have never seen the righteous forsaken.", descEn: "God remains faithful to provide." },
+        { reference: "잠언 10:22", verseKo: "여호와께서 주시는 복은 사람을 부하게 하고 근심을 겸하여 주지 아니하시느니라.", descKo: "하나님이 주시는 복의 성격을 분별하게 합니다.", verseEn: "The blessing of the Lord brings wealth, without painful toil for it.", descEn: "God's blessing is different from anxious striving." }
+      ],
+      future: [
+        { reference: "시편 32:8", verseKo: "내가 네 갈 길을 가르쳐 보이고 너를 주목하여 훈계하리로다.", descKo: "앞길을 지도하시는 하나님의 인도를 신뢰하게 합니다.", verseEn: "I will instruct you and teach you in the way you should go.", descEn: "God guides your next steps." },
+        { reference: "이사야 30:21", verseKo: "너희가 우로나 좌로나 치우칠 때에 네 뒤에서 말소리가 들려 이르기를 이것이 바른 길이니 너희는 이리로 가라.", descKo: "진로 앞에서 하나님의 세밀한 인도하심을 기대하게 합니다.", verseEn: "Whether you turn to the right or to the left, you will hear a voice saying, This is the way.", descEn: "God gives direction when choices are unclear." },
+        { reference: "잠언 16:9", verseKo: "사람이 마음으로 자기의 길을 계획할지라도 그의 걸음을 인도하시는 이는 여호와시니라.", descKo: "계획과 인도 사이의 균형을 잡아 줍니다.", verseEn: "In their hearts humans plan their course, but the Lord establishes their steps.", descEn: "Plan faithfully, but trust God's leading." },
+        { reference: "야고보서 4:15", verseKo: "주의 뜻이면 우리가 살기도 하고 이것이나 저것을 하리라 할 것이거늘.", descKo: "미래를 겸손히 하나님 뜻 아래 두게 합니다.", verseEn: "If it is the Lord's will, we will live and do this or that.", descEn: "Hold future plans under God's will." },
+        { reference: "시편 37:23-24", verseKo: "여호와께서 사람의 걸음을 정하시고... 넘어지나 아주 엎드러지지 아니함은 여호와께서 그의 손으로 붙드심이로다.", descKo: "실수와 흔들림 속에서도 붙드시는 손을 보게 합니다.", verseEn: "The Lord makes firm the steps... though he may stumble, he will not fall.", descEn: "Even stumbles are held by God." },
+        { reference: "이사야 43:19", verseKo: "보라 내가 새 일을 행하리니.", descKo: "막막함 가운데 새 길을 여시는 하나님을 기대하게 합니다.", verseEn: "See, I am doing a new thing.", descEn: "God can open a new path in uncertain seasons." },
+        { reference: "로마서 8:18", verseKo: "현재의 고난은 장차 우리에게 나타날 영광과 비교할 수 없도다.", descKo: "현재의 어려움을 미래의 소망으로 해석하게 합니다.", verseEn: "Our present sufferings are not worth comparing with the glory that will be revealed.", descEn: "Present pain is not your final future." },
+        { reference: "히브리서 11:8", verseKo: "아브라함은 부르심을 받았을 때에 순종하여... 갈 바를 알지 못하고 나아갔으며.", descKo: "확실한 지도 없이도 순종으로 한 걸음 내딛게 합니다.", verseEn: "By faith Abraham obeyed... even though he did not know where he was going.", descEn: "Faith often moves before full clarity." }
+      ]
+    };
+
+    const sectionFallbackPool = {
       mood: [
-        {
-          reference: "시편 23:4",
-          verseKo: "내가 사망의 음침한 골짜기로 다닐지라도 해를 두려워하지 않을 것은 주께서 나와 함께 하심이라.",
-          descKo: "감정의 골짜기에서도 하나님이 함께하신다는 사실이 마음을 붙들어 줍니다.",
-          verseEn: "Even though I walk through the darkest valley, I will fear no evil, for you are with me.",
-          descEn: "Even in emotional valleys, God's presence remains your stability."
-        },
-        {
-          reference: "시편 46:1",
-          verseKo: "하나님은 우리의 피난처시요 힘이시니 환난 중에 만날 큰 도움이시라.",
-          descKo: "흔들릴 때 숨을 곳과 힘의 근원이 하나님께 있음을 확인하게 합니다.",
-          verseEn: "God is our refuge and strength, an ever-present help in trouble.",
-          descEn: "When emotions shake you, this points you back to God as your refuge."
-        },
-        {
-          reference: "시편 121:1-2",
-          verseKo: "내가 산을 향하여 눈을 들리라 나의 도움이 어디서 올까 나의 도움은 천지를 지으신 여호와에게서로다.",
-          descKo: "도움의 근원을 하나님께 둘 때 마음의 초점이 다시 세워집니다.",
-          verseEn: "I lift up my eyes to the mountains... My help comes from the Lord.",
-          descEn: "It re-centers your heart on the true source of help."
-        },
-        {
-          reference: "이사야 26:3",
-          verseKo: "주께서 심지가 견고한 자를 평강하고 평강하도록 지키시리니 이는 그가 주를 신뢰함이니이다.",
-          descKo: "마음이 분주할수록 주님을 신뢰하는 데서 평안이 자랍니다.",
-          verseEn: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.",
-          descEn: "Peace grows as your mind leans on trust in God."
-        },
-        {
-          reference: "마태복음 6:34",
-          verseKo: "그러므로 내일 일을 위하여 염려하지 말라 한 날의 괴로움은 그 날로 족하니라.",
-          descKo: "감정을 키우는 미래 염려 대신 오늘의 순종에 집중하게 합니다.",
-          verseEn: "Do not worry about tomorrow... each day has enough trouble of its own.",
-          descEn: "It brings your attention from tomorrow's fear back to today's faithfulness."
-        },
-        {
-          reference: "빌립보서 4:13",
-          verseKo: "내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라.",
-          descKo: "지금 감당하기 어려운 순간에도 주님 안에서 힘을 얻도록 도와줍니다.",
-          verseEn: "I can do all this through him who gives me strength.",
-          descEn: "In hard moments, your strength is received, not self-produced."
-        },
-        {
-          reference: "로마서 8:28",
-          verseKo: "하나님을 사랑하는 자 곧 그의 뜻대로 부르심을 입은 자들에게는 모든 것이 합력하여 선을 이루느니라.",
-          descKo: "현재 감정이 복잡해도 하나님은 선한 결론으로 이끄십니다.",
-          verseEn: "In all things God works for the good of those who love him.",
-          descEn: "Even when feelings are mixed, God is still weaving good."
-        },
-        {
-          reference: "잠언 3:5-6",
-          verseKo: "너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라.",
-          descKo: "내 해석보다 하나님의 인도하심을 신뢰하도록 방향을 잡아줍니다.",
-          verseEn: "Trust in the Lord with all your heart and lean not on your own understanding.",
-          descEn: "It redirects you from self-judgment to trust in God's guidance."
-        },
-        {
-          reference: "히브리서 13:8",
-          verseKo: "예수 그리스도는 어제나 오늘이나 영원토록 동일하시니라.",
-          descKo: "감정은 변해도 주님의 성품은 변하지 않는다는 확신을 줍니다.",
-          verseEn: "Jesus Christ is the same yesterday and today and forever.",
-          descEn: "Your emotions may shift, but Christ remains unchanging."
-        },
-        {
-          reference: "데살로니가전서 5:16-18",
-          verseKo: "항상 기뻐하라 쉬지 말고 기도하라 범사에 감사하라.",
-          descKo: "감정의 흐름 속에서도 기쁨, 기도, 감사의 리듬을 회복하게 합니다.",
-          verseEn: "Rejoice always, pray continually, give thanks in all circumstances.",
-          descEn: "This restores a healthy rhythm of joy, prayer, and gratitude."
-        }
+        { reference: "시편 46:1", verseKo: "하나님은 우리의 피난처시요 힘이시니.", descKo: "모든 감정에서 하나님이 피난처가 되십니다.", verseEn: "God is our refuge and strength.", descEn: "God is a refuge in every emotional season." },
+        { reference: "이사야 41:10", verseKo: "두려워하지 말라 내가 너와 함께 함이라.", descKo: "불안과 두려움 가운데 동행을 확신하게 합니다.", verseEn: "Do not fear, for I am with you.", descEn: "God's presence calms fear." }
       ],
       situation: [
-        {
-          reference: "잠언 15:1",
-          verseKo: "유순한 대답은 분노를 쉬게 하여도 과격한 말은 노를 격동하느니라.",
-          descKo: "일상 갈등에서는 말의 온도가 관계의 방향을 크게 바꿉니다.",
-          verseEn: "A gentle answer turns away wrath, but a harsh word stirs up anger.",
-          descEn: "In daily conflict, the tone of your words shapes the outcome."
-        },
-        {
-          reference: "에베소서 4:26",
-          verseKo: "분을 내어도 죄를 짓지 말며 해가 지도록 분을 품지 말고.",
-          descKo: "갈등을 오래 끌기보다 건강하게 풀어내도록 도와주는 기준입니다.",
-          verseEn: "In your anger do not sin... do not let the sun go down while you are still angry.",
-          descEn: "It gives a boundary for resolving conflict before it hardens."
-        },
-        {
-          reference: "골로새서 3:15",
-          verseKo: "그리스도의 평강이 너희 마음을 주장하게 하라.",
-          descKo: "상황이 복잡해도 중심을 평강에 두도록 이끌어 줍니다.",
-          verseEn: "Let the peace of Christ rule in your hearts.",
-          descEn: "Even complicated situations become clearer when peace leads your heart."
-        },
-        {
-          reference: "시편 127:1",
-          verseKo: "여호와께서 집을 세우지 아니하시면 세우는 자의 수고가 헛되며.",
-          descKo: "가정과 관계의 기초를 하나님께 두어야 함을 상기시켜 줍니다.",
-          verseEn: "Unless the Lord builds the house, the builders labor in vain.",
-          descEn: "It reminds you to build family and relationships on God first."
-        },
-        {
-          reference: "마태복음 7:12",
-          verseKo: "그러므로 무엇이든지 남에게 대접을 받고자 하는 대로 너희도 남을 대접하라.",
-          descKo: "관계가 어렵게 느껴질 때 행동 기준을 단순하고 분명하게 해줍니다.",
-          verseEn: "Do to others what you would have them do to you.",
-          descEn: "When relationships are tense, this gives a clear practical standard."
-        },
-        {
-          reference: "빌립보서 2:4",
-          verseKo: "각각 자기 일을 돌볼뿐더러 또한 각각 다른 사람들의 일을 돌보아 나의 기쁨을 충만하게 하라.",
-          descKo: "내 입장만이 아니라 상대의 필요를 함께 보도록 균형을 잡아줍니다.",
-          verseEn: "Not looking to your own interests but each of you to the interests of the others.",
-          descEn: "It restores balance by considering the needs of others too."
-        },
-        {
-          reference: "로마서 12:10",
-          verseKo: "형제를 사랑하여 서로 우애하고 존경하기를 서로 먼저 하며.",
-          descKo: "존중과 배려를 먼저 선택할 때 관계의 분위기가 달라집니다.",
-          verseEn: "Be devoted to one another in love. Honor one another above yourselves.",
-          descEn: "Choosing honor first can reset the atmosphere of a relationship."
-        },
-        {
-          reference: "히브리서 10:24",
-          verseKo: "서로 돌아보아 사랑과 선행을 격려하며.",
-          descKo: "문제를 해결하는 것 이상으로 서로를 세우는 방향을 보여줍니다.",
-          verseEn: "Let us consider how we may spur one another on toward love and good deeds.",
-          descEn: "Beyond solving problems, this points to building each other up."
-        },
-        {
-          reference: "이사야 40:29",
-          verseKo: "피곤한 자에게는 능력을 주시며 무능한 자에게는 힘을 더하시나니.",
-          descKo: "생활의 무게로 지칠 때 하나님이 새 힘을 더하신다는 약속입니다.",
-          verseEn: "He gives strength to the weary and increases the power of the weak.",
-          descEn: "When daily burdens drain you, God promises renewed strength."
-        },
-        {
-          reference: "예레미야 17:7",
-          verseKo: "무릇 여호와를 의지하며 여호와를 의뢰하는 그 사람은 복을 받을 것이라.",
-          descKo: "복잡한 현실에서도 신뢰의 방향을 하나님께 두게 합니다.",
-          verseEn: "Blessed is the one who trusts in the Lord, whose confidence is in him.",
-          descEn: "In uncertainty, it anchors your confidence in God."
-        }
+        { reference: "로마서 12:18", verseKo: "할 수 있거든 모든 사람과 더불어 화목하라.", descKo: "관계 상황에서 평화의 원칙을 세웁니다.", verseEn: "As far as it depends on you, live at peace with everyone.", descEn: "A practical principle for relationships." },
+        { reference: "잠언 3:5-6", verseKo: "여호와를 신뢰하고 네 명철을 의지하지 말라.", descKo: "일상 문제를 신뢰로 풀어가게 합니다.", verseEn: "Trust in the Lord with all your heart.", descEn: "Trust guides daily decisions." }
       ]
     };
 
     function ensureMinimumVerses(library, minCount) {
       Object.keys(library).forEach((sectionKey) => {
         const options = library[sectionKey];
-        const pool = supplementalVersePool[sectionKey] || [];
         options.forEach((option) => {
           const existingRefs = new Set(option.verses.map((verse) => verse.reference));
-          let poolIndex = option.id.length % (pool.length || 1);
-          while (option.verses.length < minCount && pool.length > 0) {
-            const candidate = pool[poolIndex % pool.length];
-            poolIndex += 1;
+          const candidates = [
+            ...(supplementalVersePoolByOption[option.id] || []),
+            ...(sectionFallbackPool[sectionKey] || [])
+          ];
+          for (const candidate of candidates) {
+            if (option.verses.length >= minCount) {
+              break;
+            }
             if (existingRefs.has(candidate.reference)) {
               continue;
             }
@@ -890,7 +880,29 @@
       "예레미야": "Jeremiah",
       "에베소서": "Ephesians",
       "골로새서": "Colossians",
-      "로마서": "Romans"
+      "로마서": "Romans",
+      "느헤미야": "Nehemiah",
+      "요한복음": "John",
+      "하박국": "Habakkuk",
+      "베드로전서": "1 Peter",
+      "요한계시록": "Revelation",
+      "예레미야애가": "Lamentations",
+      "고린도후서": "2 Corinthians",
+      "신명기": "Deuteronomy",
+      "여호수아": "Joshua",
+      "스바냐": "Zephaniah",
+      "마가복음": "Mark",
+      "갈라디아서": "Galatians",
+      "출애굽기": "Exodus",
+      "역대상": "1 Chronicles",
+      "요한삼서": "3 John",
+      "민수기": "Numbers",
+      "창세기": "Genesis",
+      "전도서": "Ecclesiastes",
+      "고린도전서": "1 Corinthians",
+      "디모데전서": "1 Timothy",
+      "누가복음": "Luke",
+      "야고보서": "James"
     };
 
     function getReferenceByLanguage(reference) {
